@@ -5,33 +5,13 @@ import { SectionIntro } from "./SectionIntro";
 import styles from "../styles/portfolio.module.css";
 
 const reelGroups = [0, 1, 2];
-const autoplaySpeed = 72;
-
 export function ReelsShowcase() {
   const scrollerRef = useRef<HTMLDivElement>(null);
-  const autoplayPausedRef = useRef(false);
-  const resumeTimerRef = useRef<number | null>(null);
   const dragRef = useRef({
     active: false,
     startX: 0,
     startScrollLeft: 0,
   });
-
-  const pauseAutoplay = useCallback((resumeAfter = 0) => {
-    autoplayPausedRef.current = true;
-
-    if (resumeTimerRef.current !== null) {
-      window.clearTimeout(resumeTimerRef.current);
-      resumeTimerRef.current = null;
-    }
-
-    if (resumeAfter > 0) {
-      resumeTimerRef.current = window.setTimeout(() => {
-        autoplayPausedRef.current = false;
-        resumeTimerRef.current = null;
-      }, resumeAfter);
-    }
-  }, []);
 
   const normalizeLoop = useCallback(() => {
     const scroller = scrollerRef.current;
@@ -59,9 +39,8 @@ export function ReelsShowcase() {
       ? cards[1].offsetLeft - cards[0].offsetLeft
       : scroller.clientWidth * 0.7;
 
-    pauseAutoplay(1100);
     scroller.scrollBy({ left: direction * cardStep, behavior: "smooth" });
-  }, [pauseAutoplay]);
+  }, []);
 
   useEffect(() => {
     const scroller = scrollerRef.current;
@@ -82,30 +61,6 @@ export function ReelsShowcase() {
     };
   }, []);
 
-  useEffect(() => {
-    let frame = 0;
-    let previousTime = performance.now();
-
-    const animate = (time: number) => {
-      const elapsed = Math.min(time - previousTime, 64);
-      previousTime = time;
-
-      if (!autoplayPausedRef.current && !dragRef.current.active && scrollerRef.current) {
-        scrollerRef.current.scrollLeft += (elapsed / 1000) * autoplaySpeed;
-        normalizeLoop();
-      }
-
-      frame = window.requestAnimationFrame(animate);
-    };
-
-    frame = window.requestAnimationFrame(animate);
-
-    return () => {
-      window.cancelAnimationFrame(frame);
-      if (resumeTimerRef.current !== null) window.clearTimeout(resumeTimerRef.current);
-    };
-  }, [normalizeLoop]);
-
   const finishDrag = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
     if (!dragRef.current.active) return;
 
@@ -114,8 +69,7 @@ export function ReelsShowcase() {
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
-    pauseAutoplay(1200);
-  }, [pauseAutoplay]);
+  }, []);
 
   return (
     <section id="reels" className={`${styles.section} ${styles.reelsSection}`} data-work-section="reels">
@@ -143,7 +97,6 @@ export function ReelsShowcase() {
               ? event.deltaX
               : event.deltaY;
             event.currentTarget.scrollLeft += delta;
-            pauseAutoplay(900);
           }}
           onPointerDown={(event) => {
             if (event.button !== 0) return;
@@ -154,7 +107,6 @@ export function ReelsShowcase() {
             };
             event.currentTarget.dataset.dragging = "true";
             event.currentTarget.setPointerCapture(event.pointerId);
-            pauseAutoplay();
           }}
           onPointerMove={(event) => {
             if (!dragRef.current.active) return;

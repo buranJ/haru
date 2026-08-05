@@ -518,6 +518,15 @@
   width: max-content;
 }
 
+.reelsTrack {
+  animation: reelsMarquee 18s linear infinite;
+  will-change: transform;
+}
+
+.reelsScroller[data-dragging="true"] .reelsTrack {
+  animation-play-state: paused;
+}
+
 .reelsGroup {
   gap: 4px;
   padding-right: 4px;
@@ -568,6 +577,10 @@
   border-color: var(--black);
   color: var(--white);
   background: var(--black);
+}
+
+@keyframes reelsMarquee {
+  to { transform: translate3d(-33.333333%, 0, 0); }
 }
 
 .postersSection {
