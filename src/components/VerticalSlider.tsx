@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ledSlides } from "../data/portfolio";
 import { ReferenceMedia } from "./ReferenceMedia";
 import styles from "../styles/portfolio.module.css";
@@ -7,31 +7,78 @@ import styles from "../styles/portfolio.module.css";
 export function VerticalSlider() {
   const [active, setActive] = useState(0);
   const [direction, setDirection] = useState(1);
+  const sliderRef = useRef<HTMLDivElement>(null);
   const lockedUntil = useRef(0);
+  const wheelDelta = useRef(0);
   const pointerStart = useRef<number | null>(null);
 
-  const move = (delta: number) => {
+  const move = useCallback((delta: number) => {
     setDirection(delta);
     setActive((current) => (current + delta + ledSlides.length) % ledSlides.length);
-  };
+  }, []);
 
-  const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
-    if (Math.abs(event.deltaY) < 12 || Date.now() < lockedUntil.current) return;
-    lockedUntil.current = Date.now() + 600;
-    move(event.deltaY > 0 ? 1 : -1);
-  };
+  useEffect(() => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+
+    const handleWheel = (event: WheelEvent) => {
+      if (event.ctrlKey) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      const delta = Math.abs(event.deltaY) >= Math.abs(event.deltaX)
+        ? event.deltaY
+        : event.deltaX;
+      if (Math.abs(delta) < 1) return;
+
+      if (Date.now() < lockedUntil.current) {
+        wheelDelta.current = 0;
+        return;
+      }
+
+      wheelDelta.current += delta;
+      if (Math.abs(wheelDelta.current) < 42) return;
+
+      const nextDirection = wheelDelta.current > 0 ? 1 : -1;
+      wheelDelta.current = 0;
+      lockedUntil.current = Date.now() + 680;
+      move(nextDirection);
+    };
+
+    slider.addEventListener("wheel", handleWheel, { passive: false });
+    return () => slider.removeEventListener("wheel", handleWheel);
+  }, [move]);
 
   return (
     <div
+      ref={sliderRef}
       className={styles.verticalSlider}
-      onWheel={handleWheel}
-      onPointerDown={(event) => { pointerStart.current = event.clientY; }}
+      role="region"
+      aria-label="LED Visuals Showcase. Вертикальный слайдер"
+      tabIndex={0}
+      onKeyDown={(event) => {
+        if (event.key === "ArrowUp" || event.key === "PageUp") {
+          event.preventDefault();
+          move(-1);
+        }
+        if (event.key === "ArrowDown" || event.key === "PageDown") {
+          event.preventDefault();
+          move(1);
+        }
+      }}
+      onPointerDown={(event) => {
+        if ((event.target as HTMLElement).closest("button")) return;
+        pointerStart.current = event.clientY;
+        event.currentTarget.setPointerCapture(event.pointerId);
+      }}
       onPointerUp={(event) => {
         if (pointerStart.current === null) return;
         const delta = pointerStart.current - event.clientY;
         if (Math.abs(delta) > 30) move(delta > 0 ? 1 : -1);
         pointerStart.current = null;
       }}
+      onPointerCancel={() => { pointerStart.current = null; }}
     >
       <div className={styles.verticalViewport}>
         <AnimatePresence initial={false} custom={direction} mode="popLayout">
@@ -55,7 +102,9 @@ export function VerticalSlider() {
       </div>
       <div className={styles.sliderControls}>
         <button type="button" aria-label="Предыдущий LED-визуал" onClick={() => move(-1)}>↑</button>
-        <span>{String(active + 1).padStart(2, "0")} / {String(ledSlides.length).padStart(2, "0")}</span>
+        <span aria-live="polite">
+          {String(active + 1).padStart(2, "0")}<i />{String(ledSlides.length).padStart(2, "0")}
+        </span>
         <button type="button" aria-label="Следующий LED-визуал" onClick={() => move(1)}>↓</button>
       </div>
     </div>

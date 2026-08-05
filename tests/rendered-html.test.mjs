@@ -31,8 +31,9 @@ test("server-renders the finished portfolio", async () => {
 });
 
 test("keeps accessibility and reduced-motion behavior in source", async () => {
-  const [drawer, styles, globalStyles, packageJson] = await Promise.all([
+  const [drawer, slider, styles, globalStyles, packageJson] = await Promise.all([
     readFile(new URL("../src/components/AboutDrawer.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../src/components/VerticalSlider.tsx", import.meta.url), "utf8"),
     readFile(new URL("../src/styles/portfolio.module.css", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
@@ -42,6 +43,9 @@ test("keeps accessibility and reduced-motion behavior in source", async () => {
   assert.match(drawer, /aria-modal="true"/);
   assert.match(drawer, /event\.key === "Escape"/);
   assert.doesNotMatch(drawer, /document\.body\.style\.overflow/);
+  assert.match(slider, /event\.preventDefault\(\)/);
+  assert.match(slider, /passive:\s*false/);
+  assert.match(slider, /event\.key === "ArrowDown"/);
   assert.match(`${styles}\n${globalStyles}`, /prefers-reduced-motion:\s*reduce/);
   assert.match(packageJson, /"framer-motion"/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
