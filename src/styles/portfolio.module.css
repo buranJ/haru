@@ -496,31 +496,45 @@
 }
 
 .reelsScroller {
-  display: flex;
-  gap: 3px;
   overflow-x: auto;
   scrollbar-width: none;
   overscroll-behavior-inline: contain;
-  scroll-snap-type: x proximity;
   cursor: grab;
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
 }
 
 .reelsScroller::-webkit-scrollbar {
   display: none;
 }
 
+.reelsScroller[data-dragging="true"] {
+  cursor: grabbing;
+}
+
+.reelsTrack,
+.reelsGroup {
+  display: flex;
+  width: max-content;
+}
+
+.reelsGroup {
+  gap: 4px;
+  padding-right: 4px;
+}
+
 .reelCard {
-  min-width: 177px;
-  height: 400px;
-  padding: 14px;
+  width: clamp(235px, 15.625vw, 320px);
+  aspect-ratio: 9 / 16;
+  flex: 0 0 auto;
+  padding: 18px;
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  scroll-snap-align: start;
   color: #777;
   background: #575757;
   cursor: pointer;
-  transition: background var(--duration-fast) ease;
+  transition: background var(--duration-fast) ease, transform var(--duration-fast) ease;
 }
 
 .reelCard:nth-child(3n + 2) { background: #505050; }
@@ -534,11 +548,26 @@
 }
 
 .horizontalControls {
-  padding: 15px var(--page-gutter) 0;
+  padding: 22px var(--page-gutter) 0;
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
+  gap: 6px;
   color: #767676;
+}
+
+.horizontalControls button {
+  border: 1px solid #d2d2d2;
+  border-radius: 50%;
+  font-size: 15px;
+  line-height: 1;
+  transition: color var(--duration-fast) ease, background var(--duration-fast) ease, border-color var(--duration-fast) ease;
+}
+
+.horizontalControls button:hover,
+.horizontalControls button:focus-visible {
+  border-color: var(--black);
+  color: var(--white);
+  background: var(--black);
 }
 
 .postersSection {
@@ -982,8 +1011,12 @@
   }
 
   .reelCard {
-    min-width: 130px;
-    height: 310px;
+    width: min(68vw, 270px);
+    padding: 14px;
+  }
+
+  .horizontalControls {
+    padding-top: 18px;
   }
 
   .postersSection {
