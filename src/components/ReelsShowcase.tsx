@@ -5,7 +5,7 @@ import { SectionIntro } from "./SectionIntro";
 import styles from "../styles/portfolio.module.css";
 
 const reelGroups = [0, 1, 2];
-const autoplaySpeed = 38;
+const autoplaySpeed = 72;
 
 export function ReelsShowcase() {
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -31,14 +31,6 @@ export function ReelsShowcase() {
         resumeTimerRef.current = null;
       }, resumeAfter);
     }
-  }, []);
-
-  const resumeAutoplay = useCallback(() => {
-    if (resumeTimerRef.current !== null) {
-      window.clearTimeout(resumeTimerRef.current);
-      resumeTimerRef.current = null;
-    }
-    autoplayPausedRef.current = false;
   }, []);
 
   const normalizeLoop = useCallback(() => {
@@ -91,9 +83,6 @@ export function ReelsShowcase() {
   }, []);
 
   useEffect(() => {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (reducedMotion.matches) return;
-
     let frame = 0;
     let previousTime = performance.now();
 
@@ -131,15 +120,7 @@ export function ReelsShowcase() {
   return (
     <section id="reels" className={`${styles.section} ${styles.reelsSection}`} data-work-section="reels">
       <SectionIntro title="Reels Showcase" subtitle="более 450+" />
-      <div
-        className={styles.reelsShell}
-        onMouseEnter={() => pauseAutoplay()}
-        onMouseLeave={resumeAutoplay}
-        onFocusCapture={() => pauseAutoplay()}
-        onBlurCapture={(event) => {
-          if (!event.currentTarget.contains(event.relatedTarget)) resumeAutoplay();
-        }}
-      >
+      <div className={styles.reelsShell}>
         <div
           ref={scrollerRef}
           className={styles.reelsScroller}
