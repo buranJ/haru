@@ -14,7 +14,7 @@ export function SectionIntro({ title, subtitle }: SectionIntroProps) {
       </div>
       <div className={styles.introMeta}>
         <span>Режиссура<br />Разработка концепции</span>
-        <span>Моушн, циклопроекция<br />VFX-композитинг<br />Саунд-дизайн<br />AI-интеграция</span>
+        <span>Монтаж, цветокоррекция<br />VFX и композитинг<br />Саунд-дизайн<br />AI-интеграции</span>
       </div>
     </div>
   );

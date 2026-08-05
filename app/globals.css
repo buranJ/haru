@@ -101,7 +101,7 @@
   --soft-muted: #b5b5b5;
   --line: #bdbdbd;
   --container: 1300px;
-  --page-gutter: 70px;
+  --page-gutter: clamp(40px, 4.861vw, 70px);
   --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
   --duration-fast: 240ms;
   --duration-slow: 760ms;

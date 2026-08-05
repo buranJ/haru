@@ -5,13 +5,14 @@ import styles from "../styles/portfolio.module.css";
 interface WorkFiltersProps {
   active: WorkCategory;
   tone?: "light" | "dark";
+  spacious?: boolean;
   onSelect: (id: WorkCategory) => void;
 }
 
-export function WorkFilters({ active, tone = "light", onSelect }: WorkFiltersProps) {
+export function WorkFilters({ active, tone = "light", spacious = false, onSelect }: WorkFiltersProps) {
   return (
     <nav
-      className={`${styles.workFilters} ${tone === "dark" ? styles.filtersDark : ""}`}
+      className={`${styles.workFilters} ${tone === "dark" ? styles.filtersDark : ""} ${spacious ? styles.workFiltersSpacious : ""}`}
       aria-label="Категории работ"
     >
       {navigation.map((item) => (

@@ -37,7 +37,7 @@
   padding: 0;
   border: 0;
   background: none;
-  font-size: 20px;
+  font-size: clamp(15px, 1.389vw, 20px);
   font-weight: 400;
   line-height: 1.1;
   letter-spacing: -0.05em;
@@ -88,18 +88,18 @@
   position: absolute;
   bottom: 94px;
   left: var(--page-gutter);
-  font-size: 42px;
+  font-size: clamp(32px, 2.917vw, 42px);
   font-weight: 500;
   line-height: 0.96;
   letter-spacing: -0.065em;
 }
 
 .defaultHeroBio {
-  width: 490px;
+  width: min(34.028vw, 490px);
   position: absolute;
   right: var(--page-gutter);
   bottom: 89px;
-  font-size: 20px;
+  font-size: clamp(15px, 1.389vw, 20px);
   font-weight: 400;
   line-height: 1.38;
   letter-spacing: -0.05em;
@@ -116,22 +116,29 @@
 }
 
 .workFilters {
-  height: 76px;
+  height: 144px;
   padding: 0 var(--page-gutter);
   display: flex;
   align-items: flex-end;
-  gap: 58px;
-  border-bottom: 1px solid var(--line);
+  gap: clamp(42px, 4.514vw, 65px);
+  border-bottom: 2px solid var(--line);
   color: #7f7f7f;
   background: var(--white);
 }
 
+.workFiltersSpacious {
+  height: 202px;
+}
+
 .workFilters button {
   height: 76px;
-  padding: 0 0 12px;
+  padding: 8px 0 0;
   position: relative;
+  display: flex;
+  align-items: flex-start;
   background: transparent;
-  font-size: 15px;
+  font-size: clamp(17px, 1.667vw, 24px);
+  font-weight: 400;
   line-height: 1;
   letter-spacing: -0.04em;
   cursor: pointer;
@@ -142,9 +149,10 @@
   content: "";
   position: absolute;
   right: 0;
-  bottom: -1px;
+  top: 45px;
+  bottom: auto;
   left: 0;
-  height: 1px;
+  height: 4px;
   background: currentColor;
   transform: scaleX(0);
   transform-origin: left;
@@ -160,7 +168,12 @@
   transform: scaleX(1);
 }
 
+.workFilters .filterActive {
+  font-weight: 500;
+}
+
 .filtersDark {
+  height: 145px;
   color: #666;
   border-color: #343434;
   background: var(--black);
@@ -176,12 +189,12 @@
 }
 
 .commercial {
-  padding: 125px var(--page-gutter) 140px;
+  padding: clamp(130px, 13.819vw, 199px) var(--page-gutter) 71px;
   background: var(--white);
 }
 
 .commercialCard {
-  min-height: 370px;
+  min-height: clamp(310px, 25.694vw, 370px);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
@@ -189,7 +202,15 @@
 }
 
 .commercialCard + .commercialCard {
-  margin-top: 210px;
+  margin-top: clamp(140px, 13.75vw, 198px);
+}
+
+.commercialCard:nth-of-type(2) {
+  min-height: clamp(350px, 29.236vw, 421px);
+}
+
+.commercialCard:nth-of-type(3) {
+  margin-top: 140px;
 }
 
 .projectInfo {
@@ -202,7 +223,7 @@
 .projectInfo h3 {
   max-width: 580px;
   margin: 0;
-  font-size: 60px;
+  font-size: clamp(44px, 4.167vw, 60px);
   font-weight: 400;
   line-height: 0.92;
   letter-spacing: -0.07em;
@@ -215,7 +236,7 @@
 .projectYear {
   margin: 12px 0 0;
   color: #858585;
-  font-size: 33px;
+  font-size: clamp(24px, 2.292vw, 33px);
   line-height: 1;
   letter-spacing: -0.05em;
 }
@@ -225,17 +246,18 @@
 .skillsHeader p {
   margin: 12px 0 0;
   color: #858585;
-  font-size: 25px;
+  font-size: clamp(24px, 2.292vw, 33px);
   line-height: 1;
   letter-spacing: -0.05em;
 }
 
 .projectMeta {
   display: grid;
-  grid-template-columns: 160px 1fr;
+  grid-template-columns: 152px 1fr;
   gap: 40px;
   color: #9b9b9b;
   font-size: 17px;
+  font-weight: 300;
   line-height: 1.18;
   letter-spacing: -0.035em;
   transition: color var(--duration-fast) ease;
@@ -243,11 +265,12 @@
 
 .artistMeta {
   display: grid;
-  grid-template-columns: minmax(120px, 0.7fr) 1fr;
-  gap: 35px;
+  grid-template-columns: 177px 1fr;
+  gap: 40px;
   color: #9b9b9b;
-  font-size: 13px;
-  line-height: 1.22;
+  font-size: clamp(15px, 1.389vw, 20px);
+  font-weight: 300;
+  line-height: 1.35;
   letter-spacing: -0.035em;
   transition: color var(--duration-fast) ease;
 }
@@ -299,8 +322,8 @@
 .ledRed { background-position: 91.2% 56.1%; }
 
 .artists {
-  min-height: 1900px;
-  padding: 125px var(--page-gutter) 210px;
+  min-height: clamp(1600px, 133.611vw, 1924px);
+  padding: clamp(120px, 13.819vw, 199px) var(--page-gutter) 0;
   color: var(--white);
   background: var(--black);
 }
@@ -312,14 +335,15 @@
 }
 
 .artistCard .mediaClip {
-  height: 355px;
+  height: auto;
+  aspect-ratio: 650 / 359;
 }
 
 .artistCard h3 {
   margin: 28px 0 0;
-  font-size: 31px;
+  font-size: clamp(31px, 2.778vw, 40px);
   font-weight: 400;
-  line-height: 0.91;
+  line-height: 1.06;
   letter-spacing: -0.065em;
 }
 
@@ -330,7 +354,7 @@
 .artistCard .projectYear {
   margin-top: 12px;
   color: #bdbdbd;
-  font-size: 17px;
+  font-size: clamp(24px, 2.292vw, 33px);
 }
 
 .artistMeta {
@@ -341,16 +365,16 @@
 }
 
 .ledGrid {
-  margin-top: 210px;
+  margin-top: clamp(240px, 25.903vw, 373px);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 50px;
-  align-items: end;
+  align-items: start;
 }
 
 .ledCopy h3 {
   margin: 0;
-  font-size: 34px;
+  font-size: clamp(34px, 2.778vw, 40px);
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.065em;
@@ -359,15 +383,20 @@
 .ledCopy > p {
   margin-top: 12px;
   color: #b0b0b0;
-  font-size: 22px;
 }
 
 .ledCopy .artistMeta {
-  margin-top: 65px;
+  max-width: 600px;
+  margin-top: 34px;
+  grid-template-columns: 262px 1fr;
+}
+
+.ledCopy {
+  padding-top: 57px;
 }
 
 .verticalSlider {
-  height: 730px;
+  height: clamp(570px, 50.694vw, 730px);
   position: relative;
   overscroll-behavior: contain;
   touch-action: none;
@@ -380,7 +409,7 @@
 }
 
 .verticalViewport {
-  height: 670px;
+  height: clamp(510px, 46.528vw, 670px);
   position: relative;
   overflow: hidden;
   background: #202020;
@@ -461,11 +490,11 @@
 }
 
 .reelsSection {
-  padding: 170px 0 160px;
+  padding: 150px 0 70px;
 }
 
 .sectionIntro {
-  min-height: 205px;
+  min-height: 278px;
   padding: 0 var(--page-gutter);
   display: flex;
   justify-content: space-between;
@@ -476,7 +505,7 @@
 .clientsSection h2,
 .skillsHeader h2 {
   margin: 0;
-  font-size: 52px;
+  font-size: clamp(41px, 3.611vw, 52px);
   font-weight: 400;
   line-height: 0.95;
   letter-spacing: -0.07em;
@@ -484,11 +513,13 @@
 
 .introMeta {
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
+  grid-template-columns: 225px 245px;
   gap: 80px;
   color: #aaa;
-  font-size: 12px;
-  line-height: 1.25;
+  font-size: clamp(13px, 1.181vw, 17px);
+  font-weight: 300;
+  line-height: 1.35;
+  text-align: right;
 }
 
 .reelsShell {
@@ -557,7 +588,10 @@
 }
 
 .horizontalControls {
-  padding: 22px var(--page-gutter) 0;
+  padding: 0;
+  position: absolute;
+  top: calc(100% + 18px);
+  right: var(--page-gutter);
   display: flex;
   justify-content: flex-end;
   gap: 6px;
@@ -584,11 +618,11 @@
 }
 
 .postersSection {
-  padding: 170px var(--page-gutter) 220px;
+  padding: 150px var(--page-gutter) 220px;
 }
 
 .postersSection .sectionIntro {
-  min-height: 265px;
+  min-height: 278px;
   padding: 0;
 }
 
@@ -615,7 +649,16 @@
 .poster:hover { transform: scale(1.018); background: #4d4d4d; }
 
 .clientsSection {
-  padding: 20px var(--page-gutter) 210px;
+  padding: 20px var(--page-gutter) 340px;
+}
+
+.clientsSection h2 {
+  font-size: clamp(48px, 4.167vw, 60px);
+  font-weight: 500;
+}
+
+.skillsHeader h2 {
+  font-weight: 500;
 }
 
 .marquee {
@@ -624,6 +667,7 @@
 }
 
 .marqueeTrack {
+  min-height: 88px;
   width: max-content;
   display: flex;
   align-items: center;
@@ -667,7 +711,20 @@
 }
 
 .skillsHeader p {
-  font-size: 19px;
+}
+
+.toolsWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.toolsCaption {
+  margin: 0 0 8px !important;
+  color: var(--black) !important;
+  font-size: clamp(13px, 1.181vw, 17px) !important;
+  line-height: 1 !important;
+  letter-spacing: -0.04em !important;
 }
 
 .adobeTools {
@@ -687,6 +744,18 @@
   font-weight: 700;
 }
 
+.davinciMark {
+  width: 22px;
+  height: 22px;
+  display: block;
+  border: 3px solid transparent;
+  border-radius: 50%;
+  background: conic-gradient(#f14e4e, #f5cb4f, #43c889, #479eea, #9b68d8, #f14e4e) border-box;
+  -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
 .adobeTools span:nth-child(2),
 .adobeTools span:nth-child(5) {
   color: #bd8bff;
@@ -700,8 +769,9 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 80px;
   color: #b0b0b0;
-  font-size: 12px;
-  line-height: 1.25;
+  font-size: clamp(13px, 1.181vw, 17px);
+  font-weight: 300;
+  line-height: 1.35;
 }
 
 .skillGrid h3 {
@@ -711,20 +781,21 @@
 }
 
 .footer {
-  min-height: 300px;
-  padding: 80px var(--page-gutter) 70px;
+  min-height: 287px;
+  padding: 80px var(--page-gutter) 50px;
   display: grid;
   grid-template-columns: 1fr auto auto;
   gap: 120px;
   color: var(--white);
   background: var(--black);
-  font-size: 13px;
+  font-size: clamp(15px, 1.25vw, 18px);
   line-height: 1.2;
 }
 
 .footer > p {
   margin: 0;
-  font-size: 28px;
+  font-size: clamp(32px, 2.778vw, 40px);
+  font-weight: 400;
   line-height: 0.95;
   letter-spacing: -0.06em;
 }
@@ -735,6 +806,8 @@
   flex-direction: column;
   gap: 25px;
   color: #b5b5b5;
+  align-items: flex-end;
+  text-align: right;
 }
 
 .footer a:hover {
@@ -828,6 +901,13 @@
   .artistCard .mediaClip {
     height: 28vw;
   }
+
+  .introMeta {
+    width: 48%;
+    grid-template-columns: 0.9fr 1fr;
+    gap: 30px;
+    font-size: 13px;
+  }
 }
 
 @media (max-width: 760px) {
@@ -920,6 +1000,11 @@
     overflow-x: auto;
   }
 
+  .workFiltersSpacious,
+  .filtersDark {
+    height: 61px;
+  }
+
   .workFilters button {
     height: 61px;
     flex: 0 0 auto;
@@ -937,7 +1022,16 @@
     gap: 45px;
   }
 
+  .commercialCard,
+  .commercialCard:nth-of-type(2) {
+    min-height: 0;
+  }
+
   .commercialCard + .commercialCard {
+    margin-top: 110px;
+  }
+
+  .commercialCard:nth-of-type(3) {
     margin-top: 110px;
   }
 
@@ -972,6 +1066,30 @@
     min-height: 0;
     padding-top: 80px;
     padding-bottom: 100px;
+  }
+
+  .artistCard h3 {
+    font-size: 31px;
+  }
+
+  .artistCard .projectYear {
+    font-size: 18px;
+  }
+
+  .artistMeta {
+    grid-template-columns: 1fr 1.4fr;
+    gap: 25px;
+    font-size: 13px;
+    line-height: 1.25;
+  }
+
+  .ledCopy {
+    padding-top: 0;
+  }
+
+  .ledCopy .artistMeta {
+    grid-template-columns: 1fr 1.4fr;
+    margin-top: 45px;
   }
 
   .artistGrid,
@@ -1020,7 +1138,9 @@
 
   .introMeta {
     width: 100%;
+    grid-template-columns: 1fr 1.4fr;
     gap: 25px;
+    font-size: 12px;
   }
 
   .reelCard {

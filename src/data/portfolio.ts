@@ -49,13 +49,13 @@ export const artistProjects: ArtistProject[] = [
   {
     title: "Монеточка\nКис Кис Кис (Live)\nTitle",
     year: "2025",
-    services: ["Разработка концепции", "Моушн-дизайн", "Супервизия", "Дизайн"],
+    services: ["Разработка концепции", "Моушен-дизайн", "Стилизация", "Дизайн"],
     crop: "monetochka",
   },
   {
     title: "Gabrielė Vilkickytė\nTroleibusas\nTitle",
     year: "2024",
-    services: ["Разработка концепции", "Отрисовка элементов", "Моушн-дизайн", "Супервизия", "Дизайн"],
+    services: ["Разработка концепции", "Отрисовка элементов", "Моушен-дизайн", "Стилизация", "Дизайн"],
     crop: "gabriele",
   },
 ];
@@ -68,12 +68,12 @@ export const ledSlides: LedSlide[] = [
 
 export const skillGroups: SkillGroup[] = [
   { heading: "Режиссура", items: ["Разработка концепции", "Art Direction"] },
-  { heading: "Моушн, циклопроекция", items: ["VFX-композитинг", "Саунд-дизайн", "AI-интеграция"] },
-  { heading: "Моушн, циклопроекция", items: ["VFX-композитинг", "Саунд-дизайн", "AI-интеграция"] },
-  { heading: "Моушн, циклопроекция", items: ["VFX-композитинг", "Саунд-дизайн", "AI-интеграция"] },
+  { heading: "Монтаж, цветокоррекция", items: ["VFX и композитинг", "Саунд-дизайн", "AI-интеграции"] },
+  { heading: "Монтаж, цветокоррекция", items: ["VFX и композитинг", "Саунд-дизайн", "AI-интеграции"] },
+  { heading: "Монтаж, цветокоррекция", items: ["VFX и композитинг", "Саунд-дизайн", "AI-интеграции"] },
 ];
 
 export const reels = Array.from({ length: 12 }, (_, index) => `Reel ${index + 1}`);
 export const posters = Array.from({ length: 6 }, (_, index) => `Постер ${index + 1}`);
 export const clients = ["u!", "Woop", "● Apple", "Yandex Go", "МАКАРОННАЯ ЛАВКА", "jinalike"];
-export const adobeTools = ["Ps", "Ae", "Ai", "Pr", "Au"];
+export const adobeTools = ["Ps", "Ae", "DaVinci", "Pr", "Au"];

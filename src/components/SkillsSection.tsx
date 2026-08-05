@@ -9,8 +9,15 @@ export function SkillsSection() {
           <h2>Ключевые навыки</h2>
           <p>за 7 лет работы</p>
         </div>
-        <div className={styles.adobeTools} aria-label="Программы">
-          {adobeTools.map((tool) => <span key={tool}>{tool}</span>)}
+        <div className={styles.toolsWrap}>
+          <p className={styles.toolsCaption}>*в каких программах работаю</p>
+          <div className={styles.adobeTools} aria-label="Программы">
+            {adobeTools.map((tool) => (
+              <span key={tool} aria-label={tool}>
+                {tool === "DaVinci" ? <i className={styles.davinciMark} /> : tool}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
       <div className={styles.skillGrid}>

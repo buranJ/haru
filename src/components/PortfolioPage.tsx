@@ -61,7 +61,7 @@ export function PortfolioPage() {
         />
       </div>
 
-      <WorkFilters active={activeCategory} onSelect={selectCategory} />
+      <WorkFilters active={activeCategory} spacious onSelect={selectCategory} />
       <CommercialSection />
       <WorkFilters active={activeCategory} tone="dark" onSelect={selectCategory} />
       <ArtistsSection />

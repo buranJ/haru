@@ -43,7 +43,7 @@ export function ArtistsSection() {
           <p>более 30+</p>
           <div className={styles.artistMeta}>
             <span>Разработка концепции</span>
-            <ul><li>Отрисовка элементов</li><li>Моушн-дизайн</li><li>Супервизия</li><li>Дизайн</li></ul>
+            <ul><li>Отрисовка элементов</li><li>Моушен-дизайн</li><li>Стилизация</li><li>Дизайн</li></ul>
           </div>
         </div>
         <VerticalSlider />
