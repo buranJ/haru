@@ -6,13 +6,26 @@ interface HeaderProps {
   aboutButtonRef: RefObject<HTMLButtonElement | null>;
   onAboutToggle: () => void;
   onNavigate: (id: string) => void;
+  tone?: "light" | "dark";
 }
 
-export function Header({ aboutOpen, aboutButtonRef, onAboutToggle, onNavigate }: HeaderProps) {
+export function Header({
+  aboutOpen,
+  aboutButtonRef,
+  onAboutToggle,
+  onNavigate,
+  tone = "light",
+}: HeaderProps) {
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} ${tone === "dark" ? styles.headerDark : styles.headerLight}`}>
       <nav className={styles.primaryNav} aria-label="Основная навигация">
-        <button type="button" onClick={() => onNavigate("commercial")}>работы</button>
+        <button
+          type="button"
+          className={!aboutOpen ? styles.navActive : ""}
+          onClick={() => onNavigate("commercial")}
+        >
+          работы
+        </button>
         <button
           ref={aboutButtonRef}
           type="button"
@@ -28,8 +41,16 @@ export function Header({ aboutOpen, aboutButtonRef, onAboutToggle, onNavigate }:
       </nav>
 
       <div className={styles.headerMeta}>
-        <a href="https://t.me/zeska_" target="_blank" rel="noreferrer">мой телеграм</a>
-        <a href="https://t.me/zeska_" target="_blank" rel="noreferrer">by @zeska._</a>
+        {tone === "light" ? (
+          <a href="https://t.me/haruv00y" target="_blank" rel="noreferrer">
+            мой телеграм @haruv00y
+          </a>
+        ) : (
+          <>
+            <a href="https://t.me/haruv00y" target="_blank" rel="noreferrer">мой телеграм</a>
+            <a href="https://t.me/zeska_" target="_blank" rel="noreferrer">by @zeska._</a>
+          </>
+        )}
       </div>
     </header>
   );

@@ -53,6 +53,12 @@ export function PortfolioPage() {
           onNavigate={navigate}
         />
         <Hero />
+        <AboutDrawer
+          isOpen={aboutOpen}
+          triggerRef={aboutButtonRef}
+          onClose={() => setAboutOpen(false)}
+          onNavigate={navigate}
+        />
       </div>
 
       <WorkFilters active={activeCategory} onSelect={selectCategory} />
@@ -67,11 +73,6 @@ export function PortfolioPage() {
       <SkillsSection />
       <Footer />
 
-      <AboutDrawer
-        isOpen={aboutOpen}
-        triggerRef={aboutButtonRef}
-        onClose={() => setAboutOpen(false)}
-      />
     </main>
   );
 }
