@@ -176,7 +176,7 @@
 }
 
 .commercial {
-  padding: 190px var(--page-gutter) 210px;
+  padding: 125px var(--page-gutter) 140px;
   background: var(--white);
 }
 
@@ -189,26 +189,37 @@
 }
 
 .commercialCard + .commercialCard {
-  margin-top: 190px;
+  margin-top: 210px;
 }
 
 .projectInfo {
-  padding-right: 90px;
+  padding-right: 70px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .projectInfo h3 {
-  max-width: 550px;
+  max-width: 580px;
   margin: 0;
-  font-size: 53px;
+  font-size: 60px;
   font-weight: 400;
-  line-height: 0.93;
+  line-height: 0.92;
   letter-spacing: -0.07em;
 }
 
-.projectYear,
+.projectInfo h3 span {
+  display: block;
+}
+
+.projectYear {
+  margin: 12px 0 0;
+  color: #858585;
+  font-size: 33px;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
 .sectionIntro > div > p,
 .ledCopy > p,
 .skillsHeader p {
@@ -219,7 +230,17 @@
   letter-spacing: -0.05em;
 }
 
-.projectMeta,
+.projectMeta {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 40px;
+  color: #9b9b9b;
+  font-size: 17px;
+  line-height: 1.18;
+  letter-spacing: -0.035em;
+  transition: color var(--duration-fast) ease;
+}
+
 .artistMeta {
   display: grid;
   grid-template-columns: minmax(120px, 0.7fr) 1fr;
@@ -237,6 +258,10 @@
   padding: 0;
   margin: 0;
   list-style: none;
+}
+
+.commercialCard:nth-of-type(2) .projectMeta li:nth-child(6) {
+  margin-top: 25px;
 }
 
 .commercialCard:hover .projectMeta,
@@ -833,6 +858,12 @@
 
   .projectInfo h3 {
     font-size: 44px;
+  }
+
+  .projectMeta {
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    font-size: 12px;
   }
 
   .projectYear,

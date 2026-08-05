@@ -19,7 +19,7 @@ export function CommercialSection() {
         >
           <div className={styles.projectInfo}>
             <div>
-              <h3>{project.title}</h3>
+              <h3>{project.title.split("\n").map((line) => <span key={line}>{line}</span>)}</h3>
               <p className={styles.projectYear}>{project.year}</p>
             </div>
             <div className={styles.projectMeta}>

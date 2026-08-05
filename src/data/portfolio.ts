@@ -15,24 +15,32 @@ export const navigation: NavItem[] = [
 
 export const commercialProjects: CommercialProject[] = [
   {
-    title: "BAKAI x ApplePay",
+    title: "BAKAI x ApplePay\nCommercial",
     year: "2026",
     category: "Коммерция",
-    services: ["Motion, Циклореклама", "VFX-композитинг", "Продюсирование", "Саунд-дизайн"],
+    services: ["Монтаж, Цветокоррекция", "VFX и композитинг", "AI-интеграции", "Саунд-дизайн"],
     crop: "applePay",
   },
   {
     title: "BAKAI x YandexGo",
     year: "2026",
     category: "Коммерция",
-    services: ["Motion, Циклореклама", "VFX-композитинг", "Креатив-дизайн", "Саунд-дизайн", "AI-интеграция"],
+    services: [
+      "Монтаж, Цветокоррекция",
+      "VFX и композитинг",
+      "Моушен-дизайн",
+      "Саунд-дизайн",
+      "AI-интеграции",
+      "Разработка концепции",
+      "Режиссура",
+    ],
     crop: "yandexGo",
   },
   {
     title: "Макаронная",
     year: "2025",
     category: "Коммерция",
-    services: ["Motion", "Циклореклама", "Креатив-дизайн"],
+    services: ["Монтаж", "Цветокоррекция", "Моушен-дизайн"],
     crop: "makaronnaya",
   },
 ];

@@ -1,3 +1,27 @@
+@font-face {
+  font-family: "Product Sans";
+  src: url("/font/ProductSans-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Product Sans";
+  src: url("/font/ProductSans-Medium.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Product Sans";
+  src: url("/font/ProductSans-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
 :root {
   --black: #000000;
   --white: #ffffff;
@@ -24,7 +48,7 @@ body {
   margin: 0;
   background: var(--black);
   color: var(--black);
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Product Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-synthesis: none;
   text-rendering: geometricPrecision;
 }
