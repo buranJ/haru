@@ -41,7 +41,7 @@ test("keeps accessibility and reduced-motion behavior in source", async () => {
   assert.match(drawer, /role="dialog"/);
   assert.match(drawer, /aria-modal="true"/);
   assert.match(drawer, /event\.key === "Escape"/);
-  assert.match(drawer, /document\.body\.style\.overflow = "hidden"/);
+  assert.doesNotMatch(drawer, /document\.body\.style\.overflow/);
   assert.match(`${styles}\n${globalStyles}`, /prefers-reduced-motion:\s*reduce/);
   assert.match(packageJson, /"framer-motion"/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);

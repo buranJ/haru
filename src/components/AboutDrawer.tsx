@@ -24,8 +24,6 @@ export function AboutDrawer({ isOpen, triggerRef, onClose, onNavigate }: AboutDr
     }
 
     wasOpen.current = true;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
     const frame = window.requestAnimationFrame(() => aboutButtonRef.current?.focus());
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -52,7 +50,6 @@ export function AboutDrawer({ isOpen, triggerRef, onClose, onNavigate }: AboutDr
     document.addEventListener("keydown", handleKeyDown);
     return () => {
       window.cancelAnimationFrame(frame);
-      document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen, onClose, triggerRef]);
