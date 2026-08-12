@@ -3,6 +3,7 @@ import styles from "../styles/portfolio.module.css";
 
 interface YouTubePlayer {
   destroy(): void;
+  getIframe(): HTMLIFrameElement;
   mute(): void;
   pauseVideo(): void;
   playVideo(): void;
@@ -80,6 +81,10 @@ interface PortfolioVideoProps {
   title: string;
   className?: string;
   interactive?: boolean;
+  autoplay?: boolean;
+  preloadMargin?: string;
+  unloadDelay?: number;
+  showLoader?: boolean;
 }
 
 export function PortfolioVideo({
@@ -89,40 +94,81 @@ export function PortfolioVideo({
   title,
   className = "",
   interactive = true,
+  autoplay = true,
+  preloadMargin = "0px",
+  unloadDelay = 2000,
+  showLoader = true,
 }: PortfolioVideoProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const playerHostRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<YouTubePlayer | null>(null);
+  const visibleRef = useRef(false);
+  const autoplayRef = useRef(autoplay);
+  const unloadTimerRef = useRef<number | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [shouldMountPlayer, setShouldMountPlayer] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
+    autoplayRef.current = autoplay;
+  }, [autoplay]);
+
+  useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
 
-    const observer = new IntersectionObserver(
+    const visibilityObserver = new IntersectionObserver(
       ([entry]) => {
         const nextVisible = entry.isIntersecting && entry.intersectionRatio >= 0.18;
+        visibleRef.current = nextVisible;
         setIsVisible(nextVisible);
         if (nextVisible) setHasError(false);
-        if (!nextVisible) {
-          setIsReady(false);
-          setIsPlaying(false);
-        }
+        if (!nextVisible) setIsPlaying(false);
       },
       { threshold: [0, 0.18, 0.5] },
     );
 
-    observer.observe(root);
-    return () => observer.disconnect();
-  }, []);
+    const preloadObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (unloadTimerRef.current !== null) {
+            window.clearTimeout(unloadTimerRef.current);
+            unloadTimerRef.current = null;
+          }
+          setHasError(false);
+          setShouldMountPlayer(true);
+          return;
+        }
+
+        if (unloadTimerRef.current !== null) {
+          window.clearTimeout(unloadTimerRef.current);
+        }
+        unloadTimerRef.current = window.setTimeout(() => {
+          setShouldMountPlayer(false);
+          unloadTimerRef.current = null;
+        }, unloadDelay);
+      },
+      { rootMargin: preloadMargin, threshold: 0 },
+    );
+
+    visibilityObserver.observe(root);
+    preloadObserver.observe(root);
+    return () => {
+      visibilityObserver.disconnect();
+      preloadObserver.disconnect();
+      if (unloadTimerRef.current !== null) {
+        window.clearTimeout(unloadTimerRef.current);
+        unloadTimerRef.current = null;
+      }
+    };
+  }, [preloadMargin, unloadDelay]);
 
   useEffect(() => {
     const root = rootRef.current;
     const host = playerHostRef.current;
-    if (!root || !host || !isVisible) return;
+    if (!root || !host || !shouldMountPlayer) return;
 
     const fitPlayer = () => {
       const { width, height } = root.getBoundingClientRect();
@@ -140,11 +186,11 @@ export function PortfolioVideo({
     const resizeObserver = new ResizeObserver(fitPlayer);
     resizeObserver.observe(root);
     return () => resizeObserver.disconnect();
-  }, [aspectRatio, isVisible]);
+  }, [aspectRatio, shouldMountPlayer]);
 
   useEffect(() => {
     const host = playerHostRef.current;
-    if (!host || !isVisible) return;
+    if (!host || !shouldMountPlayer) return;
 
     let disposed = false;
     const mount = document.createElement("div");
@@ -157,7 +203,7 @@ export function PortfolioVideo({
         playerRef.current = new api.Player(mount, {
           videoId: youtubeId,
           playerVars: {
-            autoplay: reduceMotion ? 0 : 1,
+            autoplay: 0,
             controls: 0,
             disablekb: 1,
             enablejsapi: 1,
@@ -172,13 +218,25 @@ export function PortfolioVideo({
           },
           events: {
             onReady: (event) => {
+              event.target.getIframe().loading = "lazy";
               event.target.mute();
               setIsReady(true);
-              if (!reduceMotion && !document.hidden) event.target.playVideo();
+              if (!reduceMotion && !document.hidden && visibleRef.current && autoplayRef.current) {
+                event.target.playVideo();
+              }
             },
             onStateChange: (event) => {
-              if (event.data === api.PlayerState.ENDED) event.target.playVideo();
-              setIsPlaying(event.data === api.PlayerState.PLAYING);
+              if (event.data === api.PlayerState.ENDED) {
+                if (visibleRef.current && autoplayRef.current) event.target.playVideo();
+                else event.target.pauseVideo();
+              }
+              const nextPlaying = event.data === api.PlayerState.PLAYING;
+              if (nextPlaying && (!visibleRef.current || !autoplayRef.current)) {
+                event.target.pauseVideo();
+                setIsPlaying(false);
+              } else {
+                setIsPlaying(nextPlaying);
+              }
             },
             onAutoplayBlocked: () => setIsPlaying(false),
             onError: () => {
@@ -196,14 +254,19 @@ export function PortfolioVideo({
       playerRef.current?.destroy();
       playerRef.current = null;
       host.replaceChildren();
+      setIsReady(false);
+      setIsPlaying(false);
     };
-  }, [isVisible, youtubeId]);
+  }, [shouldMountPlayer, youtubeId]);
 
   useEffect(() => {
     const handleVisibility = () => {
       const player = playerRef.current;
-      if (!player || !isVisible) return;
-      if (document.hidden) player.pauseVideo();
+      if (!player) return;
+      if (document.hidden || !isVisible || !autoplay) {
+        player.pauseVideo();
+        setIsPlaying(false);
+      }
       else if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         player.mute();
         player.playVideo();
@@ -211,8 +274,9 @@ export function PortfolioVideo({
     };
 
     document.addEventListener("visibilitychange", handleVisibility);
+    handleVisibility();
     return () => document.removeEventListener("visibilitychange", handleVisibility);
-  }, [isVisible]);
+  }, [autoplay, isVisible, isReady]);
 
   const togglePlayback = () => {
     const player = playerRef.current;
@@ -242,7 +306,7 @@ export function PortfolioVideo({
         draggable={false}
       />
       <div ref={playerHostRef} className={styles.youtubeApiMount} aria-hidden="true" />
-      {isVisible && !isReady && !hasError ? (
+      {showLoader && isVisible && !isReady && !hasError ? (
         <span className={styles.videoLoader} aria-hidden="true" />
       ) : null}
       {interactive ? (

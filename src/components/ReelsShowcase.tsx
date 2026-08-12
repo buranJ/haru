@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import { reels } from "../data/portfolio";
 import { SectionIntro } from "./SectionIntro";
@@ -8,6 +8,7 @@ import styles from "../styles/portfolio.module.css";
 const reelGroups = [0, 1, 2];
 export function ReelsShowcase() {
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const [activeReelKey, setActiveReelKey] = useState(`1-${reels[0].youtubeId}`);
   const dragRef = useRef({
     active: false,
     startX: 0,
@@ -62,6 +63,55 @@ export function ReelsShowcase() {
       window.cancelAnimationFrame(frame);
       resizeObserver.disconnect();
     };
+  }, []);
+
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+
+    const cards = Array.from(
+      scroller.querySelectorAll<HTMLElement>("[data-reel-card]"),
+    );
+    const visibleCards = new Set<HTMLElement>();
+
+    const selectClosestCard = () => {
+      const viewportCenter = window.innerWidth / 2;
+      let closestCard: HTMLElement | null = null;
+      let closestDistance = Number.POSITIVE_INFINITY;
+
+      for (const card of visibleCards) {
+        const rect = card.getBoundingClientRect();
+        const visibleWidth = Math.max(
+          0,
+          Math.min(rect.right, window.innerWidth) - Math.max(rect.left, 0),
+        );
+        if (visibleWidth < rect.width * 0.32) continue;
+
+        const distance = Math.abs(rect.left + rect.width / 2 - viewportCenter);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestCard = card;
+        }
+      }
+
+      const nextKey = closestCard?.dataset.reelKey;
+      if (nextKey) setActiveReelKey((current) => current === nextKey ? current : nextKey);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const card = entry.target as HTMLElement;
+          if (entry.isIntersecting) visibleCards.add(card);
+          else visibleCards.delete(card);
+        });
+        selectClosestCard();
+      },
+      { threshold: [0, 0.2, 0.4, 0.6, 0.8, 1] },
+    );
+
+    cards.forEach((card) => observer.observe(card));
+    return () => observer.disconnect();
   }, []);
 
   const finishDrag = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
@@ -145,6 +195,7 @@ export function ReelsShowcase() {
                     key={`${groupIndex}-${reel.youtubeId}`}
                     className={styles.reelCard}
                     data-reel-card
+                    data-reel-key={`${groupIndex}-${reel.youtubeId}`}
                   >
                     <PortfolioVideo
                       youtubeId={reel.youtubeId}
@@ -152,6 +203,10 @@ export function ReelsShowcase() {
                       aspectRatio={reel.videoAspect}
                       title={reel.title}
                       interactive={false}
+                      autoplay={activeReelKey === `${groupIndex}-${reel.youtubeId}`}
+                      preloadMargin="0px 70% 0px 12%"
+                      unloadDelay={groupIndex === 1 && index < 2 ? 48000 : 9000}
+                      showLoader={false}
                     />
                     <span className={styles.videoIndex}>{String(index + 1).padStart(2, "0")}</span>
                   </div>

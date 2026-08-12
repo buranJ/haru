@@ -662,7 +662,7 @@
 }
 
 .reelsTrack {
-  animation: reelsMarquee 18s linear infinite;
+  animation: reelsMarquee 56s linear infinite;
   will-change: transform;
 }
 
@@ -689,14 +689,14 @@
   align-items: flex-end;
   justify-content: flex-end;
   color: #777;
-  background: #575757;
+  background: #000;
   cursor: pointer;
   transition: background var(--duration-fast) ease, transform var(--duration-fast) ease;
 }
 
-.reelCard:nth-child(3n + 2) { background: #505050; }
-.reelCard:nth-child(3n + 3) { background: #5d5d5d; }
-.reelCard:hover { background: #494949; }
+.reelCard:nth-child(3n + 2),
+.reelCard:nth-child(3n + 3),
+.reelCard:hover { background: #000; }
 
 .videoIndex {
   position: absolute;
@@ -1272,7 +1272,7 @@
 
   .reelCard {
     width: min(68vw, 270px);
-    padding: 14px;
+    padding: 0;
   }
 
   .horizontalControls {
