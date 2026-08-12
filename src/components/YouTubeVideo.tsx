@@ -16,7 +16,7 @@ export function YouTubeVideo({
   interactive = true,
 }: YouTubeVideoProps) {
   const playerUrl = [
-    `https://www.youtube-nocookie.com/embed/${youtubeId}`,
+    `https://www.youtube.com/embed/${youtubeId}`,
     "?autoplay=1",
     "&mute=1",
     "&loop=1",
@@ -33,7 +33,7 @@ export function YouTubeVideo({
       <iframe
         src={playerUrl}
         title={title}
-        loading="lazy"
+        loading="eager"
         allow="autoplay; encrypted-media; picture-in-picture; web-share"
         allowFullScreen={interactive}
         tabIndex={interactive ? tabIndex : -1}
