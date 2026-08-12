@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import { reels } from "../data/portfolio";
 import { SectionIntro } from "./SectionIntro";
+import { YouTubeVideo } from "./YouTubeVideo";
 import styles from "../styles/portfolio.module.css";
 
 const reelGroups = [0, 1, 2];
@@ -11,6 +12,8 @@ export function ReelsShowcase() {
     active: false,
     startX: 0,
     startScrollLeft: 0,
+    moved: false,
+    suppressClick: false,
   });
 
   const normalizeLoop = useCallback(() => {
@@ -104,6 +107,8 @@ export function ReelsShowcase() {
               active: true,
               startX: event.clientX,
               startScrollLeft: event.currentTarget.scrollLeft,
+              moved: false,
+              suppressClick: false,
             };
             event.currentTarget.dataset.dragging = "true";
             event.currentTarget.setPointerCapture(event.pointerId);
@@ -111,11 +116,21 @@ export function ReelsShowcase() {
           onPointerMove={(event) => {
             if (!dragRef.current.active) return;
             event.preventDefault();
+            if (Math.abs(event.clientX - dragRef.current.startX) > 6) {
+              dragRef.current.moved = true;
+              dragRef.current.suppressClick = true;
+            }
             event.currentTarget.scrollLeft = dragRef.current.startScrollLeft
               - (event.clientX - dragRef.current.startX);
           }}
           onPointerUp={finishDrag}
           onPointerCancel={finishDrag}
+          onClickCapture={(event) => {
+            if (!dragRef.current.suppressClick) return;
+            event.preventDefault();
+            event.stopPropagation();
+            dragRef.current.suppressClick = false;
+          }}
         >
           <div className={styles.reelsTrack}>
             {reelGroups.map((groupIndex) => (
@@ -126,16 +141,18 @@ export function ReelsShowcase() {
                 aria-hidden={groupIndex === 1 ? undefined : true}
               >
                 {reels.map((reel, index) => (
-                  <button
-                    key={`${groupIndex}-${reel}`}
+                  <div
+                    key={`${groupIndex}-${reel.youtubeId}`}
                     className={styles.reelCard}
                     data-reel-card
-                    type="button"
-                    tabIndex={groupIndex === 1 ? 0 : -1}
-                    aria-label={`Открыть ${reel}`}
                   >
-                    <span>{String(index + 1).padStart(2, "0")}</span>
-                  </button>
+                    <YouTubeVideo
+                      youtubeId={reel.youtubeId}
+                      title={reel.title}
+                      tabIndex={groupIndex === 1 ? 0 : -1}
+                    />
+                    <span className={styles.videoIndex}>{String(index + 1).padStart(2, "0")}</span>
+                  </div>
                 ))}
               </div>
             ))}

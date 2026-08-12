@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { artistProjects } from "../data/portfolio";
-import { ReferenceMedia } from "./ReferenceMedia";
+import { YouTubeVideo } from "./YouTubeVideo";
 import { VerticalSlider } from "./VerticalSlider";
 import styles from "../styles/portfolio.module.css";
 
@@ -19,7 +19,7 @@ export function ArtistsSection() {
             transition={{ duration: 0.72, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className={styles.mediaClip}>
-              <ReferenceMedia crop={project.crop} label={`${project.title}, кадр проекта`} />
+              <YouTubeVideo youtubeId={project.youtubeId} title={project.title.replaceAll("\n", " ")} />
             </div>
             <h3>{project.title.split("\n").map((line) => <span key={line}>{line}</span>)}</h3>
             <p className={styles.projectYear}>{project.year}</p>

@@ -16,6 +16,7 @@ export interface CommercialProject {
   category: string;
   services: string[];
   crop: CropName;
+  youtubeId: string;
 }
 
 export interface ArtistProject {
@@ -23,6 +24,7 @@ export interface ArtistProject {
   year: string;
   services: string[];
   crop: CropName;
+  youtubeId: string;
 }
 
 export interface NavItem {
@@ -33,6 +35,12 @@ export interface NavItem {
 export interface LedSlide {
   title: string;
   crop: CropName;
+  youtubeId: string;
+}
+
+export interface VideoItem {
+  title: string;
+  youtubeId: string;
 }
 
 export interface SkillGroup {

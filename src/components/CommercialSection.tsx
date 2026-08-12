@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { commercialProjects } from "../data/portfolio";
-import { ReferenceMedia } from "./ReferenceMedia";
+import { YouTubeVideo } from "./YouTubeVideo";
 import styles from "../styles/portfolio.module.css";
 
 export function CommercialSection() {
@@ -30,7 +30,7 @@ export function CommercialSection() {
             </div>
           </div>
           <div className={styles.mediaClip}>
-            <ReferenceMedia crop={project.crop} label={`${project.title}, кадр проекта`} />
+            <YouTubeVideo youtubeId={project.youtubeId} title={project.title.replaceAll("\n", " ")} />
           </div>
         </motion.article>
       ))}

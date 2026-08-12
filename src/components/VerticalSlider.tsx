@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ledSlides } from "../data/portfolio";
-import { ReferenceMedia } from "./ReferenceMedia";
+import { YouTubeVideo } from "./YouTubeVideo";
 import styles from "../styles/portfolio.module.css";
 
 export function VerticalSlider() {
@@ -96,7 +96,10 @@ export function VerticalSlider() {
             exit="exit"
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           >
-            <ReferenceMedia crop={ledSlides[active].crop} label={ledSlides[active].title} />
+            <YouTubeVideo
+              youtubeId={ledSlides[active].youtubeId}
+              title={ledSlides[active].title}
+            />
           </motion.div>
         </AnimatePresence>
       </div>
