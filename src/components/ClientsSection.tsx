@@ -8,7 +8,22 @@ export function ClientsSection() {
       <div className={styles.marquee} aria-label="Клиенты и партнеры">
         <div className={styles.marqueeTrack}>
           {[...clients, ...clients].map((client, index) => (
-            <span key={`${client}-${index}`} aria-hidden={index >= clients.length}>{client}</span>
+            <span
+              key={`${client.name}-${index}`}
+              aria-hidden={index >= clients.length}
+            >
+              {client.logo ? (
+                <img
+                  className={styles.clientLogo}
+                  src={client.logo}
+                  alt={client.name}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                client.name
+              )}
+            </span>
           ))}
         </div>
       </div>

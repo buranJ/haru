@@ -85,10 +85,10 @@ export const ledSlides: LedSlide[] = [
 ];
 
 export const skillGroups: SkillGroup[] = [
-  { heading: "Режиссура", items: ["Разработка концепции", "Art Direction"] },
-  { heading: "Монтаж, цветокоррекция", items: ["VFX и композитинг", "Саунд-дизайн", "AI-интеграции"] },
-  { heading: "Монтаж, цветокоррекция", items: ["VFX и композитинг", "Саунд-дизайн", "AI-интеграции"] },
-  { heading: "Монтаж, цветокоррекция", items: ["VFX и композитинг", "Саунд-дизайн", "AI-интеграции"] },
+  { heading: "Режиссура", items: ["Разработка концепции"] },
+  { heading: "Монтаж, Цветокоррекция", items: ["VFX и композитинг", "Саунд-дизайн", "AI-интеграции"] },
+  { heading: "Системное мышление", items: ["Внимание к деталям", "Работа в команде", "Инициативность"] },
+  { heading: "Русский язык", items: ["Английский язык (upper-intermediate)"] },
 ];
 
 export const reels: VideoItem[] = [
@@ -112,5 +112,17 @@ export const posters: VideoItem[] = [
   { title: "Постер 04", posterSrc: "/videos/poster-04.jpg", youtubeId: "ppL7bJlImI0", videoAspect: 9 / 16 },
   { title: "Постер 05", posterSrc: "/videos/poster-05.jpg", youtubeId: "aZDrtsv_xgE", videoAspect: 9 / 16 },
 ];
-export const clients = ["u!", "Woop", "● Apple", "Yandex Go", "МАКАРОННАЯ ЛАВКА", "jinalike"];
+export type Client = { name: string; logo?: string };
+
+export const clients: Client[] = [
+  { name: "u!", logo: "/icons/u.png" },
+  { name: "Woop" },
+  { name: "Apple", logo: "/icons/apple.png" },
+  { name: "Yandex Go", logo: "/icons/yandex.png" },
+  { name: "Макаронная лавка", logo: "/icons/mak.png" },
+  { name: "jinalike", logo: "/icons/jinalike.png" },
+  { name: "Bakai Bank", logo: "/icons/bakai.png" },
+  { name: "Илгери", logo: "/icons/ilgeri.png" },
+  { name: "Шоро", logo: "/icons/shoro.png" },
+];
 export const adobeTools = ["Ps", "Ae", "DaVinci", "Pr", "Au"];
