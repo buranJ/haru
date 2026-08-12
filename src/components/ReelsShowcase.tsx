@@ -150,6 +150,7 @@ export function ReelsShowcase() {
                       youtubeId={reel.youtubeId}
                       title={reel.title}
                       tabIndex={groupIndex === 1 ? 0 : -1}
+                      interactive={false}
                     />
                     <span className={styles.videoIndex}>{String(index + 1).padStart(2, "0")}</span>
                   </div>
