@@ -142,12 +142,14 @@ export function ReelsShowcase() {
               >
                 {reels.map((reel, index) => (
                   <div
-                    key={`${groupIndex}-${reel.videoSrc}`}
+                    key={`${groupIndex}-${reel.youtubeId}`}
                     className={styles.reelCard}
                     data-reel-card
                   >
                     <PortfolioVideo
-                      src={reel.videoSrc}
+                      youtubeId={reel.youtubeId}
+                      posterSrc={reel.posterSrc}
+                      aspectRatio={reel.videoAspect}
                       title={reel.title}
                       interactive={false}
                     />

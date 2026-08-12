@@ -51,7 +51,7 @@ test("keeps accessibility and reduced-motion behavior in source", async () => {
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
 });
 
-test("ships local, muted, viewport-lazy portfolio videos", async () => {
+test("ships adaptive, muted, viewport-lazy YouTube players", async () => {
   const [player, data, styles, videoFiles] = await Promise.all([
     readFile(new URL("../src/components/PortfolioVideo.tsx", import.meta.url), "utf8"),
     readFile(new URL("../src/data/portfolio.ts", import.meta.url), "utf8"),
@@ -60,20 +60,24 @@ test("ships local, muted, viewport-lazy portfolio videos", async () => {
   ]);
 
   assert.match(player, /new IntersectionObserver/);
-  assert.match(player, /preload="none"/);
-  assert.match(player, /removeAttribute\("src"\)/);
-  assert.match(player, /muted/);
-  assert.match(player, /playsInline/);
-  assert.doesNotMatch(`${player}\n${data}`, /youtube|iframe/i);
+  assert.match(player, /youtube\.com\/iframe_api/);
+  assert.match(player, /playerRef\.current\?\.destroy\(\)/);
+  assert.match(player, /controls:\s*0/);
+  assert.match(player, /mute:\s*1/);
+  assert.match(player, /player\.mute\(\)/);
+  assert.match(player, /playsinline:\s*1/);
+  assert.match(styles, /youtubeApiMount iframe/);
   assert.match(styles, /object-fit:\s*cover/);
+  assert.doesNotMatch(player, /<video/);
+  assert.equal((data.match(/youtubeId:/g) ?? []).length, 26);
 
   const mp4Files = videoFiles.filter((file) => file.endsWith(".mp4"));
   const posterFiles = videoFiles.filter((file) => file.endsWith(".jpg"));
-  assert.equal(mp4Files.length, 26);
+  assert.equal(mp4Files.length, 0);
   assert.equal(posterFiles.length, 26);
 
   const sizes = await Promise.all(
-    mp4Files.map((file) => stat(new URL(`../public/videos/${file}`, import.meta.url))),
+    posterFiles.map((file) => stat(new URL(`../public/videos/${file}`, import.meta.url))),
   );
-  assert.ok(sizes.every(({ size }) => size > 0 && size < 5 * 1024 * 1024));
+  assert.ok(sizes.every(({ size }) => size > 0 && size < 250 * 1024));
 });

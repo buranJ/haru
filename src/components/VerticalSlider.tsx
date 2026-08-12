@@ -97,7 +97,9 @@ export function VerticalSlider() {
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           >
             <PortfolioVideo
-              src={ledSlides[active].videoSrc}
+              youtubeId={ledSlides[active].youtubeId}
+              posterSrc={ledSlides[active].posterSrc}
+              aspectRatio={ledSlides[active].videoAspect}
               title={ledSlides[active].title}
             />
           </motion.div>

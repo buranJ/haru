@@ -30,7 +30,12 @@ export function CommercialSection() {
             </div>
           </div>
           <div className={styles.mediaClip}>
-            <PortfolioVideo src={project.videoSrc} title={project.title.replaceAll("\n", " ")} />
+            <PortfolioVideo
+              youtubeId={project.youtubeId}
+              posterSrc={project.posterSrc}
+              aspectRatio={project.videoAspect}
+              title={project.title.replaceAll("\n", " ")}
+            />
           </div>
         </motion.article>
       ))}

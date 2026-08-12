@@ -305,16 +305,37 @@
   background: #181818;
 }
 
-.portfolioVideo video {
+.videoPoster {
   width: 100%;
   height: 100%;
+  position: absolute;
+  z-index: 1;
+  inset: 0;
   display: block;
   object-fit: cover;
   object-position: center;
+  opacity: 1;
+  transition: opacity 320ms ease;
 }
 
-.videoReady video {
-  background: #181818;
+.videoReady .videoPoster {
+  opacity: 0;
+}
+
+.youtubeApiMount {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  overflow: hidden;
+  transform: translate(-50%, -50%);
+}
+
+.youtubeApiMount iframe {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  border: 0;
+  pointer-events: none;
 }
 
 .videoToggle {
@@ -322,7 +343,7 @@
   height: 42px;
   padding: 0;
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   right: 14px;
   bottom: 14px;
   display: grid;
@@ -369,7 +390,7 @@
   width: 28px;
   height: 28px;
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   top: 50%;
   left: 50%;
   border: 2px solid rgba(255, 255, 255, 0.25);

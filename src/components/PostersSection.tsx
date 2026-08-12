@@ -13,8 +13,13 @@ export function PostersSection() {
         style={{ "--poster-count": posters.length } as CSSProperties}
       >
         {posters.map((poster, index) => (
-          <div key={poster.videoSrc} className={styles.poster}>
-            <PortfolioVideo src={poster.videoSrc} title={poster.title} />
+          <div key={poster.youtubeId} className={styles.poster}>
+            <PortfolioVideo
+              youtubeId={poster.youtubeId}
+              posterSrc={poster.posterSrc}
+              aspectRatio={poster.videoAspect}
+              title={poster.title}
+            />
             <span className={styles.videoIndex}>{String(index + 1).padStart(2, "0")}</span>
           </div>
         ))}

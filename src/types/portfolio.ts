@@ -16,7 +16,9 @@ export interface CommercialProject {
   category: string;
   services: string[];
   crop: CropName;
-  videoSrc: string;
+  posterSrc: string;
+  youtubeId: string;
+  videoAspect: number;
 }
 
 export interface ArtistProject {
@@ -24,7 +26,9 @@ export interface ArtistProject {
   year: string;
   services: string[];
   crop: CropName;
-  videoSrc: string;
+  posterSrc: string;
+  youtubeId: string;
+  videoAspect: number;
 }
 
 export interface NavItem {
@@ -35,12 +39,16 @@ export interface NavItem {
 export interface LedSlide {
   title: string;
   crop: CropName;
-  videoSrc: string;
+  posterSrc: string;
+  youtubeId: string;
+  videoAspect: number;
 }
 
 export interface VideoItem {
   title: string;
-  videoSrc: string;
+  posterSrc: string;
+  youtubeId: string;
+  videoAspect: number;
 }
 
 export interface SkillGroup {

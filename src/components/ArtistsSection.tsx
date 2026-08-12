@@ -19,7 +19,12 @@ export function ArtistsSection() {
             transition={{ duration: 0.72, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className={styles.mediaClip}>
-              <PortfolioVideo src={project.videoSrc} title={project.title.replaceAll("\n", " ")} />
+              <PortfolioVideo
+                youtubeId={project.youtubeId}
+                posterSrc={project.posterSrc}
+                aspectRatio={project.videoAspect}
+                title={project.title.replaceAll("\n", " ")}
+              />
             </div>
             <h3>{project.title.split("\n").map((line) => <span key={line}>{line}</span>)}</h3>
             <p className={styles.projectYear}>{project.year}</p>
