@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import { reels } from "../data/portfolio";
 import { SectionIntro } from "./SectionIntro";
-import { YouTubeVideo } from "./YouTubeVideo";
+import { PortfolioVideo } from "./PortfolioVideo";
 import styles from "../styles/portfolio.module.css";
 
 const reelGroups = [0, 1, 2];
@@ -142,14 +142,13 @@ export function ReelsShowcase() {
               >
                 {reels.map((reel, index) => (
                   <div
-                    key={`${groupIndex}-${reel.youtubeId}`}
+                    key={`${groupIndex}-${reel.videoSrc}`}
                     className={styles.reelCard}
                     data-reel-card
                   >
-                    <YouTubeVideo
-                      youtubeId={reel.youtubeId}
+                    <PortfolioVideo
+                      src={reel.videoSrc}
                       title={reel.title}
-                      tabIndex={groupIndex === 1 ? 0 : -1}
                       interactive={false}
                     />
                     <span className={styles.videoIndex}>{String(index + 1).padStart(2, "0")}</span>

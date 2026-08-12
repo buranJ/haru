@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import { posters } from "../data/portfolio";
 import { SectionIntro } from "./SectionIntro";
-import { YouTubeVideo } from "./YouTubeVideo";
+import { PortfolioVideo } from "./PortfolioVideo";
 import styles from "../styles/portfolio.module.css";
 
 export function PostersSection() {
@@ -13,8 +13,8 @@ export function PostersSection() {
         style={{ "--poster-count": posters.length } as CSSProperties}
       >
         {posters.map((poster, index) => (
-          <div key={poster.youtubeId} className={styles.poster}>
-            <YouTubeVideo youtubeId={poster.youtubeId} title={poster.title} />
+          <div key={poster.videoSrc} className={styles.poster}>
+            <PortfolioVideo src={poster.videoSrc} title={poster.title} />
             <span className={styles.videoIndex}>{String(index + 1).padStart(2, "0")}</span>
           </div>
         ))}

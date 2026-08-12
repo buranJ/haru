@@ -4,6 +4,7 @@ import type {
   LedSlide,
   NavItem,
   SkillGroup,
+  VideoItem,
 } from "../types/portfolio";
 
 export const navigation: NavItem[] = [
@@ -20,7 +21,7 @@ export const commercialProjects: CommercialProject[] = [
     category: "Коммерция",
     services: ["Монтаж, Цветокоррекция", "VFX и композитинг", "AI-интеграции", "Саунд-дизайн"],
     crop: "applePay",
-    youtubeId: "Smiz_Qadvm0",
+    videoSrc: "/videos/commercial-apple-pay.mp4",
   },
   {
     title: "BAKAI x YandexGo",
@@ -36,7 +37,7 @@ export const commercialProjects: CommercialProject[] = [
       "Режиссура",
     ],
     crop: "yandexGo",
-    youtubeId: "nLEsMgA0fRs",
+    videoSrc: "/videos/commercial-yandex-go.mp4",
   },
   {
     title: "Макаронная",
@@ -44,7 +45,7 @@ export const commercialProjects: CommercialProject[] = [
     category: "Коммерция",
     services: ["Монтаж", "Цветокоррекция", "Моушен-дизайн"],
     crop: "makaronnaya",
-    youtubeId: "PbS9fwStsC4",
+    videoSrc: "/videos/commercial-macaronnaya.mp4",
   },
 ];
 
@@ -54,23 +55,23 @@ export const artistProjects: ArtistProject[] = [
     year: "2025",
     services: ["Разработка концепции", "Моушен-дизайн", "Стилизация", "Дизайн"],
     crop: "monetochka",
-    youtubeId: "IxsDBMib4VQ",
+    videoSrc: "/videos/artist-monetochka.mp4",
   },
   {
     title: "Gabrielė Vilkickytė\nTroleibusas\nTitle",
     year: "2024",
     services: ["Разработка концепции", "Отрисовка элементов", "Моушен-дизайн", "Стилизация", "Дизайн"],
     crop: "gabriele",
-    youtubeId: "vRBMSfyvHJM",
+    videoSrc: "/videos/artist-troleibusas.mp4",
   },
 ];
 
 export const ledSlides: LedSlide[] = [
-  { title: "LED Visual 01", crop: "ledForest", youtubeId: "S9rA_RwjWHw" },
-  { title: "LED Visual 02", crop: "ledComic", youtubeId: "79ohtRTwnBs" },
-  { title: "LED Visual 03", crop: "ledRed", youtubeId: "VOrzZtzQ59s" },
-  { title: "LED Visual 04", crop: "ledForest", youtubeId: "E30KPN4kjG0" },
-  { title: "LED Visual 05", crop: "ledComic", youtubeId: "H1dfVoDVzfc" },
+  { title: "LED Visual 01", crop: "ledForest", videoSrc: "/videos/led-01.mp4" },
+  { title: "LED Visual 02", crop: "ledComic", videoSrc: "/videos/led-02.mp4" },
+  { title: "LED Visual 03", crop: "ledRed", videoSrc: "/videos/led-03.mp4" },
+  { title: "LED Visual 04", crop: "ledForest", videoSrc: "/videos/led-04.mp4" },
+  { title: "LED Visual 05", crop: "ledComic", videoSrc: "/videos/led-05.mp4" },
 ];
 
 export const skillGroups: SkillGroup[] = [
@@ -80,26 +81,26 @@ export const skillGroups: SkillGroup[] = [
   { heading: "Монтаж, цветокоррекция", items: ["VFX и композитинг", "Саунд-дизайн", "AI-интеграции"] },
 ];
 
-export const reels = [
-  { title: "Reel 01", youtubeId: "uQEXbv5bJVY" },
-  { title: "Reel 02", youtubeId: "Jsr1ob8aloQ" },
-  { title: "Reel 03", youtubeId: "eC812aBUt_I" },
-  { title: "Reel 04", youtubeId: "OaW9Ri4oeac" },
-  { title: "Reel 05", youtubeId: "-NPrwBPggss" },
-  { title: "Reel 06", youtubeId: "dVjgmD_iP9k" },
-  { title: "Reel 07", youtubeId: "t3CWGOUngwQ" },
-  { title: "Reel 08", youtubeId: "j5Y9uKN31OE" },
-  { title: "Reel 09", youtubeId: "TkopC-ZPZGw" },
-  { title: "Reel 10", youtubeId: "j8Nx7dCQkVI" },
-  { title: "Reel 11", youtubeId: "SnfsLActltA" },
+export const reels: VideoItem[] = [
+  { title: "Reel 01", videoSrc: "/videos/reel-01.mp4" },
+  { title: "Reel 02", videoSrc: "/videos/reel-02.mp4" },
+  { title: "Reel 03", videoSrc: "/videos/reel-03.mp4" },
+  { title: "Reel 04", videoSrc: "/videos/reel-04.mp4" },
+  { title: "Reel 05", videoSrc: "/videos/reel-05.mp4" },
+  { title: "Reel 06", videoSrc: "/videos/reel-06.mp4" },
+  { title: "Reel 07", videoSrc: "/videos/reel-07.mp4" },
+  { title: "Reel 08", videoSrc: "/videos/reel-08.mp4" },
+  { title: "Reel 09", videoSrc: "/videos/reel-09.mp4" },
+  { title: "Reel 10", videoSrc: "/videos/reel-10.mp4" },
+  { title: "Reel 11", videoSrc: "/videos/reel-11.mp4" },
 ];
 
-export const posters = [
-  { title: "Постер 01", youtubeId: "G7raW6dz9UU" },
-  { title: "Постер 02", youtubeId: "W8ZS4quCo2Q" },
-  { title: "Постер 03", youtubeId: "WRmkNkPSed0" },
-  { title: "Постер 04", youtubeId: "ppL7bJlImI0" },
-  { title: "Постер 05", youtubeId: "aZDrtsv_xgE" },
+export const posters: VideoItem[] = [
+  { title: "Постер 01", videoSrc: "/videos/poster-01.mp4" },
+  { title: "Постер 02", videoSrc: "/videos/poster-02.mp4" },
+  { title: "Постер 03", videoSrc: "/videos/poster-03.mp4" },
+  { title: "Постер 04", videoSrc: "/videos/poster-04.mp4" },
+  { title: "Постер 05", videoSrc: "/videos/poster-05.mp4" },
 ];
 export const clients = ["u!", "Woop", "● Apple", "Yandex Go", "МАКАРОННАЯ ЛАВКА", "jinalike"];
 export const adobeTools = ["Ps", "Ae", "DaVinci", "Pr", "Au"];

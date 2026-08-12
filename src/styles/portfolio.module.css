@@ -297,7 +297,7 @@
   background: #565656;
 }
 
-.youtubeVideo {
+.portfolioVideo {
   width: 100%;
   height: 100%;
   position: relative;
@@ -305,14 +305,87 @@
   background: #181818;
 }
 
-.youtubeVideo iframe {
+.portfolioVideo video {
   width: 100%;
   height: 100%;
-  border: 0;
+  display: block;
+  object-fit: cover;
+  object-position: center;
 }
 
-.youtubeVideoPassive iframe {
-  pointer-events: none;
+.videoReady video {
+  background: #181818;
+}
+
+.videoToggle {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  position: absolute;
+  z-index: 2;
+  right: 14px;
+  bottom: 14px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 50%;
+  color: var(--white);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(7px);
+  cursor: pointer;
+  opacity: 0.32;
+  transition: opacity var(--duration-fast) ease, transform var(--duration-fast) ease, background var(--duration-fast) ease;
+}
+
+.portfolioVideo:hover .videoToggle,
+.videoToggle:focus-visible,
+.videoPlay {
+  opacity: 1;
+}
+
+.videoToggle:hover,
+.videoToggle:focus-visible {
+  background: rgba(0, 0, 0, 0.82);
+  transform: scale(1.08);
+}
+
+.videoPlay span {
+  width: 0;
+  height: 0;
+  margin-left: 4px;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 13px solid currentColor;
+}
+
+.videoPause span {
+  width: 13px;
+  height: 17px;
+  border-right: 4px solid currentColor;
+  border-left: 4px solid currentColor;
+}
+
+.videoLoader {
+  width: 28px;
+  height: 28px;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-top-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: videoLoading 800ms linear infinite;
+}
+
+@keyframes videoLoading {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@media (hover: none) {
+  .videoToggle { opacity: 0.68; }
+  .videoPlay { opacity: 1; }
 }
 
 .referenceMedia {

@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir, stat } from "node:fs/promises";
 import test from "node:test";
 
 async function render() {
@@ -49,4 +49,31 @@ test("keeps accessibility and reduced-motion behavior in source", async () => {
   assert.match(`${styles}\n${globalStyles}`, /prefers-reduced-motion:\s*reduce/);
   assert.match(packageJson, /"framer-motion"/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
+});
+
+test("ships local, muted, viewport-lazy portfolio videos", async () => {
+  const [player, data, styles, videoFiles] = await Promise.all([
+    readFile(new URL("../src/components/PortfolioVideo.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../src/data/portfolio.ts", import.meta.url), "utf8"),
+    readFile(new URL("../src/styles/portfolio.module.css", import.meta.url), "utf8"),
+    readdir(new URL("../public/videos/", import.meta.url)),
+  ]);
+
+  assert.match(player, /new IntersectionObserver/);
+  assert.match(player, /preload="none"/);
+  assert.match(player, /removeAttribute\("src"\)/);
+  assert.match(player, /muted/);
+  assert.match(player, /playsInline/);
+  assert.doesNotMatch(`${player}\n${data}`, /youtube|iframe/i);
+  assert.match(styles, /object-fit:\s*cover/);
+
+  const mp4Files = videoFiles.filter((file) => file.endsWith(".mp4"));
+  const posterFiles = videoFiles.filter((file) => file.endsWith(".jpg"));
+  assert.equal(mp4Files.length, 26);
+  assert.equal(posterFiles.length, 26);
+
+  const sizes = await Promise.all(
+    mp4Files.map((file) => stat(new URL(`../public/videos/${file}`, import.meta.url))),
+  );
+  assert.ok(sizes.every(({ size }) => size > 0 && size < 5 * 1024 * 1024));
 });
