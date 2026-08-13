@@ -115,6 +115,93 @@
   margin: 0;
 }
 
+.heroModeSwitch {
+  width: clamp(188px, 15.278vw, 220px);
+  min-height: 66px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 130;
+  bottom: 78px;
+  left: 50%;
+  display: grid;
+  grid-template-columns: 30px 1fr 38px;
+  align-items: center;
+  border-top: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  background: transparent;
+  transform: translateX(-50%);
+  cursor: pointer;
+  transition: opacity 260ms ease, border-color 260ms ease;
+}
+
+.modeSwitchLight {
+  color: var(--black);
+}
+
+.modeSwitchDark {
+  color: var(--white);
+}
+
+.modeNumber {
+  align-self: start;
+  padding-top: 3px;
+  color: #8a8a8a;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.modeCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  text-align: left;
+}
+
+.modeCopy small {
+  color: #8a8a8a;
+  font-size: 10px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.modeCopy strong {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.modeArrow {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1;
+  transition: color 300ms ease, background 300ms ease, transform 420ms var(--ease-editorial);
+}
+
+.heroModeSwitch:hover .modeArrow,
+.heroModeSwitch:focus-visible .modeArrow {
+  color: var(--white);
+  background: var(--black);
+  transform: translateX(5px);
+}
+
+.modeSwitchDark:hover .modeArrow,
+.modeSwitchDark:focus-visible .modeArrow {
+  color: var(--black);
+  background: var(--white);
+  transform: translateX(-5px);
+}
+
 .workFilters {
   height: 144px;
   padding: 0 var(--page-gutter);
@@ -207,10 +294,6 @@
 
 .commercialCard:nth-of-type(2) {
   min-height: clamp(350px, 29.236vw, 421px);
-}
-
-.commercialCard:nth-of-type(3) {
-  margin-top: 140px;
 }
 
 .projectInfo {
@@ -962,11 +1045,13 @@
   height: 100%;
   color: var(--white);
   background: var(--black);
+  will-change: clip-path;
 }
 
 .aboutHero {
   height: 745px;
   padding: 120px var(--page-gutter) 0;
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 760px) 500px;
   justify-content: space-between;
@@ -1104,6 +1189,37 @@
     margin-bottom: 18px;
   }
 
+  .heroModeSwitch {
+    width: 178px;
+    min-height: 58px;
+    top: 270px;
+    bottom: auto;
+    left: var(--page-gutter);
+    grid-template-columns: 26px 1fr 32px;
+    transform: none;
+  }
+
+  .modeCopy strong {
+    font-size: 16px;
+  }
+
+  .modeArrow {
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+  }
+
+  .aboutHero .heroModeSwitch {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    flex: 0 0 auto;
+    align-self: flex-start;
+    transform: none;
+  }
+
   .aboutScreen {
     min-height: 100svh;
   }
@@ -1168,10 +1284,6 @@
   }
 
   .commercialCard + .commercialCard {
-    margin-top: 110px;
-  }
-
-  .commercialCard:nth-of-type(3) {
     margin-top: 110px;
   }
 

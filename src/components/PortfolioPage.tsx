@@ -18,7 +18,9 @@ import styles from "../styles/portfolio.module.css";
 export function PortfolioPage() {
   const [aboutOpen, setAboutOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState<WorkCategory>("commercial");
-  const aboutButtonRef = useRef<HTMLButtonElement>(null);
+  const headerAboutButtonRef = useRef<HTMLButtonElement>(null);
+  const heroAboutButtonRef = useRef<HTMLButtonElement>(null);
+  const aboutReturnRef = useRef<HTMLButtonElement>(null);
 
   const navigate = useCallback((id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -48,14 +50,23 @@ export function PortfolioPage() {
       <div id="hero" className={styles.blackStage}>
         <Header
           aboutOpen={aboutOpen}
-          aboutButtonRef={aboutButtonRef}
-          onAboutToggle={() => setAboutOpen((open) => !open)}
+          aboutButtonRef={headerAboutButtonRef}
+          onAboutToggle={() => {
+            aboutReturnRef.current = headerAboutButtonRef.current;
+            setAboutOpen((open) => !open);
+          }}
           onNavigate={navigate}
         />
-        <Hero />
+        <Hero
+          aboutButtonRef={heroAboutButtonRef}
+          onAboutOpen={() => {
+            aboutReturnRef.current = heroAboutButtonRef.current;
+            setAboutOpen(true);
+          }}
+        />
         <AboutDrawer
           isOpen={aboutOpen}
-          triggerRef={aboutButtonRef}
+          triggerRef={aboutReturnRef}
           onClose={() => setAboutOpen(false)}
           onNavigate={navigate}
         />

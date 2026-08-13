@@ -31,8 +31,9 @@ test("server-renders the finished portfolio", async () => {
 });
 
 test("keeps accessibility and reduced-motion behavior in source", async () => {
-  const [drawer, slider, styles, globalStyles, packageJson] = await Promise.all([
+  const [drawer, heroSwitch, slider, styles, globalStyles, packageJson] = await Promise.all([
     readFile(new URL("../src/components/AboutDrawer.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../src/components/HeroModeSwitch.tsx", import.meta.url), "utf8"),
     readFile(new URL("../src/components/VerticalSlider.tsx", import.meta.url), "utf8"),
     readFile(new URL("../src/styles/portfolio.module.css", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
@@ -42,6 +43,11 @@ test("keeps accessibility and reduced-motion behavior in source", async () => {
   assert.match(drawer, /role="dialog"/);
   assert.match(drawer, /aria-modal="true"/);
   assert.match(drawer, /event\.key === "Escape"/);
+  assert.match(drawer, /duration:\s*1\.04/);
+  assert.doesNotMatch(drawer, /initial=\{\{\s*x:/);
+  assert.match(heroSwitch, /Открыть экран «Обо мне»/);
+  assert.match(heroSwitch, /Вернуться к экрану работ/);
+  assert.match(heroSwitch, /aria-controls="about-drawer"/);
   assert.doesNotMatch(drawer, /document\.body\.style\.overflow/);
   assert.match(slider, /event\.preventDefault\(\)/);
   assert.match(slider, /passive:\s*false/);

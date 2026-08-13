@@ -1,7 +1,14 @@
 import { motion } from "framer-motion";
+import type { RefObject } from "react";
+import { HeroModeSwitch } from "./HeroModeSwitch";
 import styles from "../styles/portfolio.module.css";
 
-export function Hero() {
+interface HeroProps {
+  aboutButtonRef: RefObject<HTMLButtonElement | null>;
+  onAboutOpen: () => void;
+}
+
+export function Hero({ aboutButtonRef, onAboutOpen }: HeroProps) {
   return (
     <section className={styles.hero} aria-labelledby="hero-title">
       <motion.h1
@@ -36,6 +43,8 @@ export function Hero() {
           анимации и пост-продакшена
         </p>
       </motion.div>
+
+      <HeroModeSwitch ref={aboutButtonRef} mode="about" onClick={onAboutOpen} />
     </section>
   );
 }

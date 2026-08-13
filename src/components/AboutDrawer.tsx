@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 import type { RefObject } from "react";
 import { Header } from "./Header";
+import { HeroModeSwitch } from "./HeroModeSwitch";
 import styles from "../styles/portfolio.module.css";
 
 interface AboutDrawerProps {
@@ -56,7 +57,7 @@ export function AboutDrawer({ isOpen, triggerRef, onClose, onNavigate }: AboutDr
 
   const navigateAfterClose = (id: string) => {
     onClose();
-    window.setTimeout(() => onNavigate(id), 820);
+    window.setTimeout(() => onNavigate(id), 1080);
   };
 
   return (
@@ -69,10 +70,15 @@ export function AboutDrawer({ isOpen, triggerRef, onClose, onNavigate }: AboutDr
           role="dialog"
           aria-modal="true"
           aria-labelledby="about-title"
-          initial={{ x: "100%", clipPath: "inset(0 0 0 100%)" }}
-          animate={{ x: 0, clipPath: "inset(0 0 0 0%)" }}
-          exit={{ x: "100%", clipPath: "inset(0 0 0 100%)" }}
-          transition={{ duration: 0.82, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ clipPath: "inset(0 0 0 100%)" }}
+          animate={{
+            clipPath: "inset(0 0 0 0%)",
+            transition: { duration: 0.96, ease: [0.76, 0, 0.24, 1] },
+          }}
+          exit={{
+            clipPath: "inset(0 0 0 100%)",
+            transition: { duration: 1.04, delay: 0.08, ease: [0.76, 0, 0.24, 1] },
+          }}
         >
           <Header
             tone="dark"
@@ -87,7 +93,12 @@ export function AboutDrawer({ isOpen, triggerRef, onClose, onNavigate }: AboutDr
               className={styles.aboutCopy}
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.62, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
+              exit={{ opacity: 0, x: 26 }}
+              transition={{
+                opacity: { duration: 0.52 },
+                x: { duration: 0.52, ease: [0.76, 0, 0.24, 1] },
+                y: { duration: 0.62, delay: 0.34, ease: [0.22, 1, 0.36, 1] },
+              }}
             >
               <h2 id="about-title">Николь<br />Назаркулова</h2>
               <p>
@@ -101,9 +112,16 @@ export function AboutDrawer({ isOpen, triggerRef, onClose, onNavigate }: AboutDr
               className={styles.aboutMedia}
               initial={{ opacity: 0, clipPath: "inset(0 100% 0 0)" }}
               animate={{ opacity: 1, clipPath: "inset(0 0% 0 0)" }}
-              transition={{ duration: 0.72, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
+              exit={{ opacity: 0, x: 34 }}
+              transition={{
+                opacity: { duration: 0.5 },
+                x: { duration: 0.58, ease: [0.76, 0, 0.24, 1] },
+                clipPath: { duration: 0.72, delay: 0.42, ease: [0.22, 1, 0.36, 1] },
+              }}
               aria-label="Медиаблок раздела «О себе»"
             />
+
+            <HeroModeSwitch mode="work" onClick={onClose} />
           </section>
         </motion.aside>
       )}
