@@ -757,7 +757,9 @@
 }
 
 .posterGallery {
-  height: 392px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: calc(var(--poster-count) * 9) / 16;
   display: grid;
   grid-template-columns: repeat(var(--poster-count), minmax(0, 1fr));
   gap: 3px;
@@ -1298,7 +1300,8 @@
   }
 
   .posterGallery {
-    height: 330px;
+    height: 338px;
+    aspect-ratio: auto;
     grid-template-columns: repeat(var(--poster-count), 190px);
     overflow-x: auto;
   }

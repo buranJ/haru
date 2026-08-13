@@ -19,6 +19,7 @@ export function PostersSection() {
               posterSrc={poster.posterSrc}
               aspectRatio={poster.videoAspect}
               title={poster.title}
+              fit="contain"
             />
             <span className={styles.videoIndex}>{String(index + 1).padStart(2, "0")}</span>
           </div>

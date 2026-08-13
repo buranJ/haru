@@ -52,10 +52,11 @@ test("keeps accessibility and reduced-motion behavior in source", async () => {
 });
 
 test("ships adaptive, muted, viewport-lazy YouTube players", async () => {
-  const [player, reels, verticalSlider, data, styles, videoFiles] = await Promise.all([
+  const [player, reels, verticalSlider, posters, data, styles, videoFiles] = await Promise.all([
     readFile(new URL("../src/components/PortfolioVideo.tsx", import.meta.url), "utf8"),
     readFile(new URL("../src/components/ReelsShowcase.tsx", import.meta.url), "utf8"),
     readFile(new URL("../src/components/VerticalSlider.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../src/components/PostersSection.tsx", import.meta.url), "utf8"),
     readFile(new URL("../src/data/portfolio.ts", import.meta.url), "utf8"),
     readFile(new URL("../src/styles/portfolio.module.css", import.meta.url), "utf8"),
     readdir(new URL("../public/videos/", import.meta.url)),
@@ -68,7 +69,9 @@ test("ships adaptive, muted, viewport-lazy YouTube players", async () => {
   assert.match(player, /enabled/);
   assert.match(reels, /enabled=\{activeReelKey ===/);
   assert.match(verticalSlider, /fit="contain"/);
+  assert.match(posters, /fit="contain"/);
   assert.match(styles, /\.videoContain \.videoPoster\s*\{[^}]*object-fit:\s*contain/s);
+  assert.match(styles, /aspect-ratio:\s*calc\(var\(--poster-count\) \* 9\) \/ 16/);
   assert.match(player, /typeof player\?\.pauseVideo === "function"/);
   assert.match(player, /if \(!player \|\| !isReady\) return/);
   assert.match(player, /if \(disposed\) return/);
