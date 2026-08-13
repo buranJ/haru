@@ -954,6 +954,18 @@
   object-position: center;
 }
 
+/* Only a client that carries a href gets one; it must not resize the cell. */
+.clientLink {
+  display: block;
+  line-height: 0;
+  transition: opacity var(--duration-fast) ease;
+}
+
+.clientLink:hover,
+.clientLink:focus-visible {
+  opacity: 0.62;
+}
+
 @keyframes marquee {
   to { transform: translateX(-50%); }
 }

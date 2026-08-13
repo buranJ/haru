@@ -112,11 +112,11 @@ export const posters: VideoItem[] = [
   { title: "Постер 04", posterSrc: "/videos/poster-04.jpg", youtubeId: "ppL7bJlImI0", videoAspect: 9 / 16 },
   { title: "Постер 05", posterSrc: "/videos/poster-05.jpg", youtubeId: "aZDrtsv_xgE", videoAspect: 9 / 16 },
 ];
-export type Client = { name: string; logo?: string };
+export type Client = { name: string; logo?: string; href?: string };
 
 export const clients: Client[] = [
   { name: "u!", logo: "/icons/u.png" },
-  { name: "Woop" },
+  { name: "ITDOS", logo: "/itdos.svg", href: "https://itdos.dev" },
   { name: "Apple", logo: "/icons/apple.png" },
   { name: "Yandex Go", logo: "/icons/yandex.png" },
   { name: "Макаронная лавка", logo: "/icons/mak.png" },
