@@ -21,8 +21,9 @@ export const HeroModeSwitch = forwardRef<HTMLButtonElement, HeroModeSwitchProps>
         onClick={onClick}
       >
         <span className={styles.modeArrow} aria-hidden="true">
-          <span className={styles.modeArrowLine} />
-          <span className={styles.modeArrowHead} />
+          <span className={styles.modeArrowShaft} />
+          <span className={`${styles.modeArrowWing} ${styles.modeArrowWingTop}`} />
+          <span className={`${styles.modeArrowWing} ${styles.modeArrowWingBottom}`} />
         </span>
       </button>
     );

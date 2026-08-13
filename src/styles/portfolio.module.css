@@ -123,8 +123,8 @@
 }
 
 .heroModeSwitch {
-  width: clamp(150px, 13.194vw, 190px);
-  height: 52px;
+  width: clamp(112px, 9.028vw, 130px);
+  height: 44px;
   padding: 0;
   position: relative;
   z-index: 2;
@@ -152,7 +152,7 @@
   transition: transform 680ms var(--ease-editorial);
 }
 
-.modeArrowLine {
+.modeArrowShaft {
   height: 1px;
   position: absolute;
   top: 50%;
@@ -160,33 +160,42 @@
   left: 0;
   display: block;
   background: currentColor;
-  transform: translateY(-50%);
-  transition: height 300ms ease;
+  transform: translateY(-0.5px);
 }
 
-.modeArrowHead {
-  width: 18px;
-  height: 18px;
+.modeArrowWing {
+  width: 17px;
+  height: 1px;
   position: absolute;
   top: 50%;
   display: block;
-  border-top: 1px solid currentColor;
-  border-right: 1px solid currentColor;
+  background: currentColor;
+  transform-origin: center right;
 }
 
-.modeSwitchLight .modeArrowHead {
-  right: 1px;
-  transform: translateY(-50%) rotate(45deg);
+.modeSwitchLight .modeArrowWing {
+  right: 0;
 }
 
-.modeSwitchDark .modeArrowHead {
-  left: 1px;
-  transform: translateY(-50%) rotate(-135deg);
+.modeSwitchLight .modeArrowWingTop {
+  transform: translateY(-0.5px) rotate(45deg);
 }
 
-.heroModeSwitch:hover .modeArrowLine,
-.heroModeSwitch:focus-visible .modeArrowLine {
-  height: 3px;
+.modeSwitchLight .modeArrowWingBottom {
+  transform: translateY(-0.5px) rotate(-45deg);
+}
+
+.modeSwitchDark .modeArrowWing {
+  left: 0;
+  transform-origin: center left;
+}
+
+.modeSwitchDark .modeArrowWingTop {
+  transform: translateY(-0.5px) rotate(-45deg);
+}
+
+.modeSwitchDark .modeArrowWingBottom {
+  transform: translateY(-0.5px) rotate(45deg);
 }
 
 .modeSwitchLight:hover .modeArrow,
@@ -1078,7 +1087,16 @@
 
 .aboutMedia {
   height: 368px;
+  overflow: hidden;
   background: #e9e9e9;
+}
+
+.aboutPortrait {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center 37%;
 }
 
 .visuallyHidden {
@@ -1194,8 +1212,8 @@
   }
 
   .heroModeSwitch {
-    width: 132px;
-    height: 42px;
+    width: 104px;
+    height: 38px;
   }
 
   .heroIdentity .heroModeSwitch {
