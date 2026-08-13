@@ -9,8 +9,9 @@ export function Footer() {
         <a href="#commercial">работы</a>
       </nav>
       <div>
-        <a href="https://t.me/zeska_" target="_blank" rel="noreferrer">tg @haru00y</a>
-        <a href="tel:+996706184725">+996 706 184 725</a>
+        <a href="https://t.me/haruv00y" target="_blank" rel="noreferrer">
+          мой телеграм @haruv00y
+        </a>
       </div>
     </footer>
   );

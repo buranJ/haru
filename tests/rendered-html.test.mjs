@@ -106,6 +106,14 @@ test("keeps the requested hero header order and telegram identity", async () => 
   assert.match(page, /activeSection=\{aboutOpen \? "about" : "work"\}/);
 });
 
+test("uses the correct Telegram destination in the footer without a phone number", async () => {
+  const footer = await readFile(new URL("../src/components/Footer.tsx", import.meta.url), "utf8");
+
+  assert.match(footer, /href="https:\/\/t\.me\/haruv00y"/);
+  assert.match(footer, /мой телеграм @haruv00y/);
+  assert.doesNotMatch(footer, /tel:|zeska|\+996|haru00y/i);
+});
+
 test("fades and visually normalizes the clients marquee", async () => {
   const styles = await readFile(new URL("../src/styles/portfolio.module.css", import.meta.url), "utf8");
 

@@ -747,8 +747,7 @@
 
 .introMeta {
   display: grid;
-  grid-template-columns: 225px 245px;
-  gap: 80px;
+  grid-template-columns: 245px;
   color: #aaa;
   font-size: clamp(13px, 1.181vw, 17px);
   font-weight: 300;
@@ -1178,9 +1177,8 @@
   }
 
   .introMeta {
-    width: 48%;
-    grid-template-columns: 0.9fr 1fr;
-    gap: 30px;
+    width: 30%;
+    grid-template-columns: 1fr;
     font-size: 13px;
   }
 }
@@ -1417,8 +1415,7 @@
 
   .introMeta {
     width: 100%;
-    grid-template-columns: 1fr 1.4fr;
-    gap: 25px;
+    grid-template-columns: 1fr;
     font-size: 12px;
   }
 
