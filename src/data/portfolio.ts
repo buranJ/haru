@@ -24,6 +24,7 @@ export const commercialProjects: CommercialProject[] = [
     posterSrc: "/videos/commercial-apple-pay.jpg",
     youtubeId: "Smiz_Qadvm0",
     videoAspect: 16 / 9,
+    href: "https://www.instagram.com/reel/Dbc8mNDt3AP/",
   },
   {
     title: "BAKAI x YandexGo",
@@ -42,6 +43,7 @@ export const commercialProjects: CommercialProject[] = [
     posterSrc: "/videos/commercial-yandex-go.jpg",
     youtubeId: "nLEsMgA0fRs",
     videoAspect: 139 / 90,
+    href: "https://www.instagram.com/reel/DTu8ib7jETw/",
   },
   {
     title: "Макаронная",
@@ -52,6 +54,7 @@ export const commercialProjects: CommercialProject[] = [
     posterSrc: "/videos/commercial-macaronnaya.jpg",
     youtubeId: "PbS9fwStsC4",
     videoAspect: 139 / 90,
+    href: "https://www.instagram.com/reel/DNHrwIUI2dA/",
   },
 ];
 
@@ -64,6 +67,7 @@ export const artistProjects: ArtistProject[] = [
     posterSrc: "/videos/artist-monetochka.jpg",
     youtubeId: "IxsDBMib4VQ",
     videoAspect: 16 / 9,
+    href: "https://youtu.be/NdDQIXQrLzE",
   },
   {
     title: "Gabrielė Vilkickytė\nTroleibusas\nTitle",
@@ -73,6 +77,7 @@ export const artistProjects: ArtistProject[] = [
     posterSrc: "/videos/artist-troleibusas.jpg",
     youtubeId: "vRBMSfyvHJM",
     videoAspect: 16 / 9,
+    href: "https://www.instagram.com/p/DC6PTL0snTL/",
   },
 ];
 

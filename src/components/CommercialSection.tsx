@@ -36,6 +36,15 @@ export function CommercialSection() {
               aspectRatio={project.videoAspect}
               title={project.title.replaceAll("\n", " ")}
             />
+            {project.href ? (
+              <a
+                className={styles.mediaLink}
+                href={project.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Смотреть «${project.title.replaceAll("\n", " ")}» — откроется в новой вкладке`}
+              />
+            ) : null}
           </div>
         </motion.article>
       ))}

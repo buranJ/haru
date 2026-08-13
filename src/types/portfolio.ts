@@ -19,6 +19,8 @@ export interface CommercialProject {
   posterSrc: string;
   youtubeId: string;
   videoAspect: number;
+  /** Where the published work lives; opens in a new tab from the media. */
+  href?: string;
 }
 
 export interface ArtistProject {
@@ -29,6 +31,7 @@ export interface ArtistProject {
   posterSrc: string;
   youtubeId: string;
   videoAspect: number;
+  href?: string;
 }
 
 export interface NavItem {
