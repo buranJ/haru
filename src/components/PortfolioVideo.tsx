@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import styles from "../styles/portfolio.module.css";
 
 interface YouTubePlayer {
-  destroy(): void;
-  getIframe(): HTMLIFrameElement;
-  mute(): void;
-  pauseVideo(): void;
-  playVideo(): void;
+  destroy?: () => void;
+  getIframe?: () => HTMLIFrameElement;
+  mute?: () => void;
+  pauseVideo?: () => void;
+  playVideo?: () => void;
 }
 
 interface YouTubeEvent {
@@ -43,6 +43,22 @@ declare global {
 }
 
 let youtubeApiPromise: Promise<YouTubeApi> | null = null;
+
+function mutePlayer(player?: YouTubePlayer | null) {
+  if (typeof player?.mute === "function") player.mute();
+}
+
+function pausePlayer(player?: YouTubePlayer | null) {
+  if (typeof player?.pauseVideo === "function") player.pauseVideo();
+}
+
+function playPlayer(player?: YouTubePlayer | null) {
+  if (typeof player?.playVideo === "function") player.playVideo();
+}
+
+function destroyPlayer(player?: YouTubePlayer | null) {
+  if (typeof player?.destroy === "function") player.destroy();
+}
 
 function loadYouTubeApi() {
   if (window.YT?.Player) return Promise.resolve(window.YT);
@@ -225,19 +241,24 @@ export function PortfolioVideo({
           },
           events: {
             onReady: (event) => {
-              event.target.getIframe().loading = "lazy";
-              event.target.mute();
+              if (disposed) return;
+              const iframe = typeof event.target.getIframe === "function"
+                ? event.target.getIframe()
+                : null;
+              if (iframe) iframe.loading = "lazy";
+              mutePlayer(event.target);
               setIsReady(true);
               if (!reduceMotion && !document.hidden && visibleRef.current && autoplayRef.current) {
-                event.target.playVideo();
+                playPlayer(event.target);
               }
             },
             onStateChange: (event) => {
+              if (disposed) return;
               if (event.data === api.PlayerState.ENDED) {
                 setIsPlaying(false);
                 setIsPresentationReady(false);
-                if (visibleRef.current && autoplayRef.current) event.target.playVideo();
-                else event.target.pauseVideo();
+                if (visibleRef.current && autoplayRef.current) playPlayer(event.target);
+                else pausePlayer(event.target);
                 return;
               }
 
@@ -246,7 +267,7 @@ export function PortfolioVideo({
                   setIsPlaying(true);
                   return;
                 }
-                event.target.pauseVideo();
+                pausePlayer(event.target);
                 setIsPlaying(false);
                 setIsPresentationReady(false);
                 return;
@@ -258,10 +279,12 @@ export function PortfolioVideo({
               }
             },
             onAutoplayBlocked: () => {
+              if (disposed) return;
               setIsPlaying(false);
               setIsPresentationReady(false);
             },
             onError: () => {
+              if (disposed) return;
               setHasError(true);
               setIsReady(false);
               setIsPlaying(false);
@@ -274,7 +297,7 @@ export function PortfolioVideo({
 
     return () => {
       disposed = true;
-      playerRef.current?.destroy();
+      destroyPlayer(playerRef.current);
       playerRef.current = null;
       host.replaceChildren();
       setIsReady(false);
@@ -298,15 +321,15 @@ export function PortfolioVideo({
   useEffect(() => {
     const handleVisibility = () => {
       const player = playerRef.current;
-      if (!player) return;
+      if (!player || !isReady) return;
       if (document.hidden || !isVisible || !autoplay) {
-        player.pauseVideo();
+        pausePlayer(player);
         setIsPlaying(false);
         setIsPresentationReady(false);
       }
       else if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        player.mute();
-        player.playVideo();
+        mutePlayer(player);
+        playPlayer(player);
       }
     };
 
@@ -317,14 +340,14 @@ export function PortfolioVideo({
 
   const togglePlayback = () => {
     const player = playerRef.current;
-    if (!player) return;
+    if (!player || !isReady) return;
     if (isPlaying) {
       setIsPresentationReady(false);
-      player.pauseVideo();
+      pausePlayer(player);
     }
     else {
-      player.mute();
-      player.playVideo();
+      mutePlayer(player);
+      playPlayer(player);
     }
   };
 
