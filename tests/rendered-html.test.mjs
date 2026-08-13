@@ -52,8 +52,9 @@ test("keeps accessibility and reduced-motion behavior in source", async () => {
 });
 
 test("ships adaptive, muted, viewport-lazy YouTube players", async () => {
-  const [player, data, styles, videoFiles] = await Promise.all([
+  const [player, reels, data, styles, videoFiles] = await Promise.all([
     readFile(new URL("../src/components/PortfolioVideo.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../src/components/ReelsShowcase.tsx", import.meta.url), "utf8"),
     readFile(new URL("../src/data/portfolio.ts", import.meta.url), "utf8"),
     readFile(new URL("../src/styles/portfolio.module.css", import.meta.url), "utf8"),
     readdir(new URL("../public/videos/", import.meta.url)),
@@ -64,6 +65,8 @@ test("ships adaptive, muted, viewport-lazy YouTube players", async () => {
   assert.match(player, /unloadDelay/);
   assert.match(player, /isPresentationReady/);
   assert.match(player, /2600/);
+  assert.match(player, /enabled/);
+  assert.match(reels, /enabled=\{activeReelKey ===/);
   assert.match(player, /youtube\.com\/iframe_api/);
   assert.match(player, /playerRef\.current\?\.destroy\(\)/);
   assert.match(player, /controls:\s*0/);

@@ -203,9 +203,10 @@ export function ReelsShowcase() {
                       aspectRatio={reel.videoAspect}
                       title={reel.title}
                       interactive={false}
+                      enabled={activeReelKey === `${groupIndex}-${reel.youtubeId}`}
                       autoplay={activeReelKey === `${groupIndex}-${reel.youtubeId}`}
                       preloadMargin="0px 70% 0px 12%"
-                      unloadDelay={groupIndex === 1 && index < 2 ? 48000 : 9000}
+                      unloadDelay={1200}
                       showLoader={false}
                     />
                     <span className={styles.videoIndex}>{String(index + 1).padStart(2, "0")}</span>

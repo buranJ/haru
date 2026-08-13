@@ -81,6 +81,7 @@ interface PortfolioVideoProps {
   title: string;
   className?: string;
   interactive?: boolean;
+  enabled?: boolean;
   autoplay?: boolean;
   preloadMargin?: string;
   unloadDelay?: number;
@@ -94,6 +95,7 @@ export function PortfolioVideo({
   title,
   className = "",
   interactive = true,
+  enabled = true,
   autoplay = true,
   preloadMargin = "0px",
   unloadDelay = 2000,
@@ -111,6 +113,7 @@ export function PortfolioVideo({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPresentationReady, setIsPresentationReady] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const canMountPlayer = enabled && shouldMountPlayer;
 
   useEffect(() => {
     autoplayRef.current = autoplay;
@@ -172,7 +175,7 @@ export function PortfolioVideo({
   useEffect(() => {
     const root = rootRef.current;
     const host = playerHostRef.current;
-    if (!root || !host || !shouldMountPlayer) return;
+    if (!root || !host || !canMountPlayer) return;
 
     const fitPlayer = () => {
       const { width, height } = root.getBoundingClientRect();
@@ -190,11 +193,11 @@ export function PortfolioVideo({
     const resizeObserver = new ResizeObserver(fitPlayer);
     resizeObserver.observe(root);
     return () => resizeObserver.disconnect();
-  }, [aspectRatio, shouldMountPlayer]);
+  }, [aspectRatio, canMountPlayer]);
 
   useEffect(() => {
     const host = playerHostRef.current;
-    if (!host || !shouldMountPlayer) return;
+    if (!host || !canMountPlayer) return;
 
     let disposed = false;
     const mount = document.createElement("div");
@@ -278,7 +281,7 @@ export function PortfolioVideo({
       setIsPlaying(false);
       setIsPresentationReady(false);
     };
-  }, [shouldMountPlayer, youtubeId]);
+  }, [canMountPlayer, youtubeId]);
 
   useEffect(() => {
     if (!isPlaying || !isVisible) return;
