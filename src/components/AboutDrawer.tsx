@@ -102,12 +102,12 @@ export function AboutDrawer({ isOpen, triggerRef, onClose, onNavigate }: AboutDr
               }}
             >
               <h2 id="about-title">Николь<br />Назаркулова</h2>
+              <HeroModeSwitch ref={returnButtonRef} mode="work" onClick={onClose} />
               <p>
                 Motion Design, Graph Design, vfx - Artist<br />
                 создаю коммерцию, визуалы для артистов<br />
                 и развлекательный контент
               </p>
-              <HeroModeSwitch ref={returnButtonRef} mode="work" onClick={onClose} />
             </motion.div>
 
             <motion.div

@@ -123,35 +123,18 @@
 }
 
 .heroModeSwitch {
-  width: clamp(180px, 15.278vw, 220px);
-  min-height: 45px;
-  padding: 0 0 11px;
+  width: clamp(150px, 13.194vw, 190px);
+  height: 52px;
+  padding: 0;
   position: relative;
-  z-index: 130;
-  display: grid;
-  grid-template-columns: 28px 1fr auto;
-  align-items: end;
-  border-bottom: 1px solid currentColor;
+  z-index: 2;
+  display: block;
   background: transparent;
   cursor: pointer;
-  transition: opacity 260ms ease;
-}
-
-.heroModeSwitch::after {
-  content: "";
-  height: 2px;
-  position: absolute;
-  right: 0;
-  bottom: -1px;
-  left: 0;
-  background: currentColor;
-  transform: scaleX(0.22);
-  transform-origin: right;
-  transition: transform 620ms var(--ease-editorial);
 }
 
 .heroIdentity .heroModeSwitch {
-  margin-top: 48px;
+  margin-top: 32px;
 }
 
 .modeSwitchLight {
@@ -162,46 +145,58 @@
   color: var(--white);
 }
 
-.modeNumber {
-  color: #8a8a8a;
-  font-size: 11px;
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: 0.04em;
-}
-
-.modeLabel {
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 0.9;
-  letter-spacing: -0.045em;
-  text-align: left;
-}
-
 .modeArrow {
-  font-size: 22px;
-  font-weight: 300;
-  line-height: 0.75;
-  transition: transform 520ms var(--ease-editorial);
+  position: absolute;
+  inset: 0;
+  display: block;
+  transition: transform 680ms var(--ease-editorial);
 }
 
-.heroModeSwitch:hover::after,
-.heroModeSwitch:focus-visible::after {
-  transform: scaleX(1);
+.modeArrowLine {
+  height: 1px;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  display: block;
+  background: currentColor;
+  transform: translateY(-50%);
+  transition: height 300ms ease;
+}
+
+.modeArrowHead {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  top: 50%;
+  display: block;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+}
+
+.modeSwitchLight .modeArrowHead {
+  right: 1px;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.modeSwitchDark .modeArrowHead {
+  left: 1px;
+  transform: translateY(-50%) rotate(-135deg);
+}
+
+.heroModeSwitch:hover .modeArrowLine,
+.heroModeSwitch:focus-visible .modeArrowLine {
+  height: 3px;
 }
 
 .modeSwitchLight:hover .modeArrow,
 .modeSwitchLight:focus-visible .modeArrow {
-  transform: translate(4px, -4px);
-}
-
-.modeSwitchDark::after {
-  transform-origin: left;
+  transform: translateX(12px);
 }
 
 .modeSwitchDark:hover .modeArrow,
 .modeSwitchDark:focus-visible .modeArrow {
-  transform: translate(-4px, 4px);
+  transform: translateX(-12px);
 }
 
 .workFilters {
@@ -1070,7 +1065,7 @@
 }
 
 .aboutCopy p {
-  margin: 69px 0 0;
+  margin: 36px 0 0;
   font-size: 20px;
   font-weight: 300;
   line-height: 1.42;
@@ -1078,7 +1073,7 @@
 }
 
 .aboutCopy .heroModeSwitch {
-  margin-top: 50px;
+  margin-top: 28px;
 }
 
 .aboutMedia {
@@ -1199,21 +1194,12 @@
   }
 
   .heroModeSwitch {
-    width: 164px;
-    min-height: 40px;
-    grid-template-columns: 25px 1fr auto;
+    width: 132px;
+    height: 42px;
   }
 
   .heroIdentity .heroModeSwitch {
-    margin-top: 32px;
-  }
-
-  .modeLabel {
-    font-size: 16px;
-  }
-
-  .modeArrow {
-    font-size: 19px;
+    margin-top: 22px;
   }
 
   .aboutScreen {
@@ -1236,12 +1222,12 @@
   }
 
   .aboutCopy p {
-    margin-top: 42px;
+    margin-top: 28px;
     font-size: 14px;
   }
 
   .aboutCopy .heroModeSwitch {
-    margin-top: 34px;
+    margin-top: 18px;
   }
 
   .aboutMedia {
