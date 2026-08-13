@@ -11,15 +11,17 @@ interface HeroProps {
 export function Hero({ aboutButtonRef, onAboutOpen }: HeroProps) {
   return (
     <section className={styles.hero} aria-labelledby="hero-title">
-      <motion.h1
-        id="hero-title"
-        className={styles.defaultHeroName}
+      <motion.div
+        className={styles.heroIdentity}
         initial={{ opacity: 0, y: 22 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       >
-        Николь<br />Назаркулова
-      </motion.h1>
+        <h1 id="hero-title" className={styles.defaultHeroName}>
+          Николь<br />Назаркулова
+        </h1>
+        <HeroModeSwitch ref={aboutButtonRef} mode="about" onClick={onAboutOpen} />
+      </motion.div>
 
       <motion.div
         className={styles.showreelTitle}
@@ -44,7 +46,6 @@ export function Hero({ aboutButtonRef, onAboutOpen }: HeroProps) {
         </p>
       </motion.div>
 
-      <HeroModeSwitch ref={aboutButtonRef} mode="about" onClick={onAboutOpen} />
     </section>
   );
 }

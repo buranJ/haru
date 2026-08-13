@@ -13,7 +13,8 @@ interface AboutDrawerProps {
 }
 
 export function AboutDrawer({ isOpen, triggerRef, onClose, onNavigate }: AboutDrawerProps) {
-  const aboutButtonRef = useRef<HTMLButtonElement>(null);
+  const aboutNavButtonRef = useRef<HTMLButtonElement>(null);
+  const returnButtonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLElement>(null);
   const wasOpen = useRef(false);
 
@@ -25,7 +26,7 @@ export function AboutDrawer({ isOpen, triggerRef, onClose, onNavigate }: AboutDr
     }
 
     wasOpen.current = true;
-    const frame = window.requestAnimationFrame(() => aboutButtonRef.current?.focus());
+    const frame = window.requestAnimationFrame(() => returnButtonRef.current?.focus());
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -83,7 +84,7 @@ export function AboutDrawer({ isOpen, triggerRef, onClose, onNavigate }: AboutDr
           <Header
             tone="dark"
             aboutOpen
-            aboutButtonRef={aboutButtonRef}
+            aboutButtonRef={aboutNavButtonRef}
             onAboutToggle={onClose}
             onNavigate={navigateAfterClose}
           />
@@ -106,6 +107,7 @@ export function AboutDrawer({ isOpen, triggerRef, onClose, onNavigate }: AboutDr
                 создаю коммерцию, визуалы для артистов<br />
                 и развлекательный контент
               </p>
+              <HeroModeSwitch ref={returnButtonRef} mode="work" onClick={onClose} />
             </motion.div>
 
             <motion.div
@@ -121,7 +123,6 @@ export function AboutDrawer({ isOpen, triggerRef, onClose, onNavigate }: AboutDr
               aria-label="Медиаблок раздела «О себе»"
             />
 
-            <HeroModeSwitch mode="work" onClick={onClose} />
           </section>
         </motion.aside>
       )}

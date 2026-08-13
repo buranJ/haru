@@ -48,6 +48,10 @@ test("keeps accessibility and reduced-motion behavior in source", async () => {
   assert.match(heroSwitch, /Открыть экран «Обо мне»/);
   assert.match(heroSwitch, /Вернуться к экрану работ/);
   assert.match(heroSwitch, /aria-controls="about-drawer"/);
+  assert.match(heroSwitch, /opensAbout \? "о себе" : "к работам"/);
+  assert.match(drawer, /ref=\{returnButtonRef\} mode="work"/);
+  assert.match(styles, /\.heroIdentity \.heroModeSwitch\s*\{[^}]*margin-top:\s*48px/s);
+  assert.match(styles, /\.aboutCopy \.heroModeSwitch\s*\{[^}]*margin-top:\s*50px/s);
   assert.doesNotMatch(drawer, /document\.body\.style\.overflow/);
   assert.match(slider, /event\.preventDefault\(\)/);
   assert.match(slider, /passive:\s*false/);

@@ -21,12 +21,9 @@ export const HeroModeSwitch = forwardRef<HTMLButtonElement, HeroModeSwitchProps>
         onClick={onClick}
       >
         <span className={styles.modeNumber}>{opensAbout ? "02" : "01"}</span>
-        <span className={styles.modeCopy}>
-          <small>{opensAbout ? "сменить экран" : "вернуться"}</small>
-          <strong>{opensAbout ? "Обо мне" : "К работам"}</strong>
-        </span>
+        <span className={styles.modeLabel}>{opensAbout ? "о себе" : "к работам"}</span>
         <span className={styles.modeArrow} aria-hidden="true">
-          {opensAbout ? "→" : "←"}
+          {opensAbout ? "↗" : "↙"}
         </span>
       </button>
     );
