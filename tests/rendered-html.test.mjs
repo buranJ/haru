@@ -51,6 +51,21 @@ test("keeps accessibility and reduced-motion behavior in source", async () => {
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
 });
 
+test("uses the supplied Product Sans family with deliberate editorial weights", async () => {
+  const [styles, globalStyles] = await Promise.all([
+    readFile(new URL("../src/styles/portfolio.module.css", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(globalStyles, /--font-sans:\s*"Product Sans"/);
+  assert.match(globalStyles, /font-family:\s*var\(--font-sans\)/);
+  assert.match(globalStyles, /font-synthesis:\s*none/);
+  assert.match(styles, /\.defaultHeroName\s*\{[^}]*font-weight:\s*500/s);
+  assert.match(styles, /\.projectInfo h3\s*\{[^}]*font-weight:\s*500/s);
+  assert.match(styles, /\.projectMeta\s*\{[^}]*font-weight:\s*300/s);
+  assert.match(styles, /\.sectionIntro h2,[\s\S]*?font-weight:\s*500/);
+});
+
 test("ships adaptive, muted, viewport-lazy YouTube players", async () => {
   const [player, reels, verticalSlider, posters, data, styles, videoFiles] = await Promise.all([
     readFile(new URL("../src/components/PortfolioVideo.tsx", import.meta.url), "utf8"),

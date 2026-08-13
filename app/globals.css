@@ -95,6 +95,7 @@
 }
 
 :root {
+  --font-sans: "Product Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --black: #000000;
   --white: #ffffff;
   --muted: #858585;
@@ -122,13 +123,16 @@ button,
 input,
 textarea,
 select {
-  font-family: "Product Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
+  font-kerning: normal;
+  font-optical-sizing: auto;
 }
 
 body {
   margin: 0;
   background: var(--black);
   color: var(--black);
+  font-weight: 400;
   font-synthesis: none;
   text-rendering: geometricPrecision;
 }
