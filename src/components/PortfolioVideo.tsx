@@ -109,6 +109,7 @@ export function PortfolioVideo({
   const [shouldMountPlayer, setShouldMountPlayer] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isPresentationReady, setIsPresentationReady] = useState(false);
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
@@ -125,7 +126,10 @@ export function PortfolioVideo({
         visibleRef.current = nextVisible;
         setIsVisible(nextVisible);
         if (nextVisible) setHasError(false);
-        if (!nextVisible) setIsPlaying(false);
+        if (!nextVisible) {
+          setIsPlaying(false);
+          setIsPresentationReady(false);
+        }
       },
       { threshold: [0, 0.18, 0.5] },
     );
@@ -227,22 +231,38 @@ export function PortfolioVideo({
             },
             onStateChange: (event) => {
               if (event.data === api.PlayerState.ENDED) {
+                setIsPlaying(false);
+                setIsPresentationReady(false);
                 if (visibleRef.current && autoplayRef.current) event.target.playVideo();
                 else event.target.pauseVideo();
+                return;
               }
-              const nextPlaying = event.data === api.PlayerState.PLAYING;
-              if (nextPlaying && (!visibleRef.current || !autoplayRef.current)) {
+
+              if (event.data === api.PlayerState.PLAYING) {
+                if (visibleRef.current && autoplayRef.current) {
+                  setIsPlaying(true);
+                  return;
+                }
                 event.target.pauseVideo();
                 setIsPlaying(false);
-              } else {
-                setIsPlaying(nextPlaying);
+                setIsPresentationReady(false);
+                return;
+              }
+
+              if (event.data === api.PlayerState.PAUSED) {
+                setIsPlaying(false);
+                setIsPresentationReady(false);
               }
             },
-            onAutoplayBlocked: () => setIsPlaying(false),
+            onAutoplayBlocked: () => {
+              setIsPlaying(false);
+              setIsPresentationReady(false);
+            },
             onError: () => {
               setHasError(true);
               setIsReady(false);
               setIsPlaying(false);
+              setIsPresentationReady(false);
             },
           },
         });
@@ -256,8 +276,21 @@ export function PortfolioVideo({
       host.replaceChildren();
       setIsReady(false);
       setIsPlaying(false);
+      setIsPresentationReady(false);
     };
   }, [shouldMountPlayer, youtubeId]);
+
+  useEffect(() => {
+    if (!isPlaying || !isVisible) return;
+
+    // YouTube always renders its title/avatar chrome when playback starts.
+    // Keep our poster above it until that transient chrome has faded away.
+    const revealTimer = window.setTimeout(() => {
+      setIsPresentationReady(true);
+    }, 2600);
+
+    return () => window.clearTimeout(revealTimer);
+  }, [isPlaying, isVisible]);
 
   useEffect(() => {
     const handleVisibility = () => {
@@ -266,6 +299,7 @@ export function PortfolioVideo({
       if (document.hidden || !isVisible || !autoplay) {
         player.pauseVideo();
         setIsPlaying(false);
+        setIsPresentationReady(false);
       }
       else if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         player.mute();
@@ -281,7 +315,10 @@ export function PortfolioVideo({
   const togglePlayback = () => {
     const player = playerRef.current;
     if (!player) return;
-    if (isPlaying) player.pauseVideo();
+    if (isPlaying) {
+      setIsPresentationReady(false);
+      player.pauseVideo();
+    }
     else {
       player.mute();
       player.playVideo();
@@ -291,7 +328,7 @@ export function PortfolioVideo({
   return (
     <div
       ref={rootRef}
-      className={`${styles.portfolioVideo} ${isPlaying ? styles.videoReady : ""} ${className}`}
+      className={`${styles.portfolioVideo} ${isPresentationReady ? styles.videoReady : ""} ${className}`}
       role="group"
       aria-label={title}
     >

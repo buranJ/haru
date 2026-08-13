@@ -62,6 +62,8 @@ test("ships adaptive, muted, viewport-lazy YouTube players", async () => {
   assert.match(player, /new IntersectionObserver/);
   assert.match(player, /preloadMargin/);
   assert.match(player, /unloadDelay/);
+  assert.match(player, /isPresentationReady/);
+  assert.match(player, /2600/);
   assert.match(player, /youtube\.com\/iframe_api/);
   assert.match(player, /playerRef\.current\?\.destroy\(\)/);
   assert.match(player, /controls:\s*0/);
