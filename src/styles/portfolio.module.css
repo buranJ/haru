@@ -581,7 +581,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 50px;
-  align-items: start;
+  align-items: center;
 }
 
 .ledCopy h3 {
@@ -603,12 +603,7 @@
   grid-template-columns: 262px 1fr;
 }
 
-.ledCopy {
-  padding-top: 57px;
-}
-
 .verticalSlider {
-  height: clamp(570px, 50.694vw, 730px);
   position: relative;
   overscroll-behavior: contain;
   touch-action: none;
@@ -620,16 +615,33 @@
   cursor: grabbing;
 }
 
+/* Height follows the column so the stack always reads as one whole frame
+   between two cropped neighbours, at any width. */
 .verticalViewport {
-  height: clamp(510px, 46.528vw, 670px);
+  aspect-ratio: 16 / 21;
   position: relative;
   overflow: hidden;
-  background: #202020;
+}
+
+.verticalTrack {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: clamp(16px, 1.667vw, 24px);
 }
 
 .verticalSlide {
-  position: absolute;
-  inset: 0;
+  aspect-ratio: 16 / 9;
+  flex: 0 0 auto;
+  background: #181818;
+  transition: opacity var(--duration-fast) ease;
+}
+
+.verticalSlide:not(.verticalSlideActive) {
+  opacity: 0.72;
 }
 
 .sliderControls {
@@ -674,19 +686,7 @@
   background: var(--white);
 }
 
-.sliderControls span {
-  width: 36px;
-  height: 45px;
-  display: grid;
-  grid-template-rows: 1fr 1px 1fr;
-  place-items: center;
-  color: #858585;
-  font-size: 10px;
-  font-style: normal;
-  line-height: 1;
-}
-
-.sliderControls span i {
+.sliderDivider {
   width: 14px;
   height: 1px;
   display: block;
@@ -797,16 +797,6 @@
 .reelCard:nth-child(3n + 2),
 .reelCard:nth-child(3n + 3),
 .reelCard:hover { background: #000; }
-
-.videoIndex {
-  position: absolute;
-  z-index: 2;
-  right: 12px;
-  bottom: 12px;
-  pointer-events: none;
-  color: rgba(255, 255, 255, 0.34);
-  font-size: 11px;
-}
 
 .horizontalControls {
   padding: 0;
@@ -1339,10 +1329,6 @@
     line-height: 1.25;
   }
 
-  .ledCopy {
-    padding-top: 0;
-  }
-
   .ledCopy .artistMeta {
     grid-template-columns: 1fr 1.4fr;
     margin-top: 45px;
@@ -1367,12 +1353,8 @@
     gap: 65px;
   }
 
-  .verticalSlider {
-    height: 570px;
-  }
-
   .verticalViewport {
-    height: 510px;
+    aspect-ratio: 16 / 19;
   }
 
   .reelsSection {

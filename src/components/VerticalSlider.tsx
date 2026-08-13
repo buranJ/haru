@@ -1,21 +1,71 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ledSlides } from "../data/portfolio";
 import { PortfolioVideo } from "./PortfolioVideo";
 import styles from "../styles/portfolio.module.css";
 
+const SLIDE_COUNT = ledSlides.length;
+
+// Three copies of the reel let the stack run past either end and be re-centred
+// silently, so the loop never shows a rewind. The pointer lives in the middle copy.
+const LOOP = [...ledSlides, ...ledSlides, ...ledSlides];
+
+// How far from the active slide a frame still gets mounted. Two keeps the
+// peeking neighbours filled while a move is animating.
+const MOUNT_RANGE = 2;
+
 export function VerticalSlider() {
-  const [active, setActive] = useState(0);
-  const [direction, setDirection] = useState(1);
+  const [position, setPosition] = useState(SLIDE_COUNT);
+  // Set whenever the stack has to jump rather than travel: the first measured
+  // layout, a resize, or the silent hop back into the middle copy.
+  const [isInstant, setIsInstant] = useState(true);
+  const [metrics, setMetrics] = useState({ slide: 0, stride: 0 });
   const sliderRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const lockedUntil = useRef(0);
   const wheelDelta = useRef(0);
   const pointerStart = useRef<number | null>(null);
 
+  const active = ((position % SLIDE_COUNT) + SLIDE_COUNT) % SLIDE_COUNT;
+
   const move = useCallback((delta: number) => {
-    setDirection(delta);
-    setActive((current) => (current + delta + ledSlides.length) % ledSlides.length);
+    setIsInstant(false);
+    setPosition((current) => current + delta);
   }, []);
+
+  // The stack is offset in pixels, so the slide height has to be measured
+  // rather than assumed — the column is fluid.
+  useLayoutEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const measure = () => {
+      const slide = track.firstElementChild;
+      if (!slide) return;
+      const height = slide.getBoundingClientRect().height;
+      const gap = Number.parseFloat(window.getComputedStyle(track).rowGap) || 0;
+      setIsInstant(true);
+      setMetrics({ slide: height, stride: height + gap });
+    };
+
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(track);
+    return () => observer.disconnect();
+  }, []);
+
+  // Drop back into the middle copy once a move settles outside it.
+  const recenter = () => {
+    if (position >= SLIDE_COUNT && position < SLIDE_COUNT * 2) return;
+    setIsInstant(true);
+    setPosition((current) => (current < SLIDE_COUNT ? current + SLIDE_COUNT : current - SLIDE_COUNT));
+  };
+
+  useEffect(() => {
+    if (!isInstant) return;
+    const frame = window.requestAnimationFrame(() => setIsInstant(false));
+    return () => window.cancelAnimationFrame(frame);
+  }, [isInstant, position, metrics]);
 
   useEffect(() => {
     const slider = sliderRef.current;
@@ -81,37 +131,49 @@ export function VerticalSlider() {
       onPointerCancel={() => { pointerStart.current = null; }}
     >
       <div className={styles.verticalViewport}>
-        <AnimatePresence initial={false} custom={direction} mode="popLayout">
-          <motion.div
-            key={active}
-            className={styles.verticalSlide}
-            custom={direction}
-            variants={{
-              enter: (value: number) => ({ y: value > 0 ? "100%" : "-100%", opacity: 0 }),
-              center: { y: 0, opacity: 1 },
-              exit: (value: number) => ({ y: value > 0 ? "-100%" : "100%", opacity: 0 }),
-            }}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <PortfolioVideo
-              youtubeId={ledSlides[active].youtubeId}
-              posterSrc={ledSlides[active].posterSrc}
-              aspectRatio={ledSlides[active].videoAspect}
-              title={ledSlides[active].title}
-              fit="contain"
-            />
-          </motion.div>
-        </AnimatePresence>
+        <motion.div
+          ref={trackRef}
+          className={styles.verticalTrack}
+          animate={{ y: -(position * metrics.stride + metrics.slide / 2) }}
+          transition={isInstant
+            ? { duration: 0 }
+            : { duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
+          onAnimationComplete={recenter}
+        >
+          {LOOP.map((slide, index) => {
+            const isActive = index === position;
+
+            return (
+              <div
+                key={`${slide.title}-${index}`}
+                className={`${styles.verticalSlide} ${isActive ? styles.verticalSlideActive : ""}`}
+                aria-hidden={!isActive}
+              >
+                {Math.abs(index - position) <= MOUNT_RANGE ? (
+                  <PortfolioVideo
+                    youtubeId={slide.youtubeId}
+                    posterSrc={slide.posterSrc}
+                    aspectRatio={slide.videoAspect}
+                    title={slide.title}
+                    fit="contain"
+                    enabled={isActive}
+                    autoplay={isActive}
+                    interactive={isActive}
+                    showLoader={isActive}
+                  />
+                ) : null}
+              </div>
+            );
+          })}
+        </motion.div>
       </div>
       <div className={styles.sliderControls}>
         <button type="button" aria-label="Предыдущий LED-визуал" onClick={() => move(-1)}>↑</button>
-        <span aria-live="polite">
-          {String(active + 1).padStart(2, "0")}<i />{String(ledSlides.length).padStart(2, "0")}
-        </span>
+        <i className={styles.sliderDivider} aria-hidden="true" />
         <button type="button" aria-label="Следующий LED-визуал" onClick={() => move(1)}>↓</button>
+        <span className={styles.visuallyHidden} aria-live="polite">
+          Визуал {active + 1} из {SLIDE_COUNT}
+        </span>
       </div>
     </div>
   );

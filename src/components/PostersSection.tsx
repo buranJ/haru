@@ -12,7 +12,7 @@ export function PostersSection() {
         className={styles.posterGallery}
         style={{ "--poster-count": posters.length } as CSSProperties}
       >
-        {posters.map((poster, index) => (
+        {posters.map((poster) => (
           <div key={poster.youtubeId} className={styles.poster}>
             <PortfolioVideo
               youtubeId={poster.youtubeId}
@@ -21,7 +21,6 @@ export function PostersSection() {
               title={poster.title}
               fit="contain"
             />
-            <span className={styles.videoIndex}>{String(index + 1).padStart(2, "0")}</span>
           </div>
         ))}
       </div>

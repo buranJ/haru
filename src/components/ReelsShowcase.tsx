@@ -190,7 +190,7 @@ export function ReelsShowcase() {
                 data-reel-group
                 aria-hidden={groupIndex === 1 ? undefined : true}
               >
-                {reels.map((reel, index) => (
+                {reels.map((reel) => (
                   <div
                     key={`${groupIndex}-${reel.youtubeId}`}
                     className={styles.reelCard}
@@ -209,7 +209,6 @@ export function ReelsShowcase() {
                       unloadDelay={1200}
                       showLoader={false}
                     />
-                    <span className={styles.videoIndex}>{String(index + 1).padStart(2, "0")}</span>
                   </div>
                 ))}
               </div>
