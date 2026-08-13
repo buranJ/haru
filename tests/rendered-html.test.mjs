@@ -27,6 +27,7 @@ test("server-renders the finished portfolio", async () => {
   assert.match(html, /Reels Showcase/);
   assert.match(html, /Клиенты и партнеры/);
   assert.match(html, /property="og:image"/);
+  assert.match(html, /href="[^"]*\/favicon-n\.svg"/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|react-loading-skeleton/i);
 });
 

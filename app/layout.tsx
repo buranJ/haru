@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title,
   description,
-  icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
+  icons: { icon: "/favicon-n.svg", shortcut: "/favicon-n.svg" },
   openGraph: {
     title,
     description,
