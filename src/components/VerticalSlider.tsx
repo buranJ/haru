@@ -101,6 +101,7 @@ export function VerticalSlider() {
               posterSrc={ledSlides[active].posterSrc}
               aspectRatio={ledSlides[active].videoAspect}
               title={ledSlides[active].title}
+              fit="contain"
             />
           </motion.div>
         </AnimatePresence>

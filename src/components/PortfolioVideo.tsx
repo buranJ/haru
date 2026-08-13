@@ -96,6 +96,7 @@ interface PortfolioVideoProps {
   aspectRatio: number;
   title: string;
   className?: string;
+  fit?: "cover" | "contain";
   interactive?: boolean;
   enabled?: boolean;
   autoplay?: boolean;
@@ -110,6 +111,7 @@ export function PortfolioVideo({
   aspectRatio,
   title,
   className = "",
+  fit = "cover",
   interactive = true,
   enabled = true,
   autoplay = true,
@@ -194,7 +196,10 @@ export function PortfolioVideo({
     const fitPlayer = () => {
       const { width, height } = root.getBoundingClientRect();
       if (!width || !height) return;
-      if (width / height > aspectRatio) {
+      const sizeByWidth = fit === "cover"
+        ? width / height > aspectRatio
+        : width / height <= aspectRatio;
+      if (sizeByWidth) {
         host.style.width = `${Math.ceil(width)}px`;
         host.style.height = `${Math.ceil(width / aspectRatio)}px`;
       } else {
@@ -207,7 +212,7 @@ export function PortfolioVideo({
     const resizeObserver = new ResizeObserver(fitPlayer);
     resizeObserver.observe(root);
     return () => resizeObserver.disconnect();
-  }, [aspectRatio, canMountPlayer]);
+  }, [aspectRatio, canMountPlayer, fit]);
 
   useEffect(() => {
     const host = playerHostRef.current;
@@ -333,7 +338,7 @@ export function PortfolioVideo({
   return (
     <div
       ref={rootRef}
-      className={`${styles.portfolioVideo} ${isPlaying ? styles.videoReady : ""} ${className}`}
+      className={`${styles.portfolioVideo} ${fit === "contain" ? styles.videoContain : ""} ${isPlaying ? styles.videoReady : ""} ${className}`}
       role="group"
       aria-label={title}
     >
