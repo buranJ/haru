@@ -1,11 +1,20 @@
+import { Fragment } from "react";
 import styles from "../styles/portfolio.module.css";
+
+const defaultServices = [
+  "Монтаж, цветокоррекция",
+  "VFX и композитинг",
+  "Саунд-дизайн",
+  "AI-интеграции",
+];
 
 interface SectionIntroProps {
   title: string;
   subtitle: string;
+  services?: string[];
 }
 
-export function SectionIntro({ title, subtitle }: SectionIntroProps) {
+export function SectionIntro({ title, subtitle, services = defaultServices }: SectionIntroProps) {
   return (
     <div className={styles.sectionIntro}>
       <div>
@@ -13,7 +22,14 @@ export function SectionIntro({ title, subtitle }: SectionIntroProps) {
         <p>{subtitle}</p>
       </div>
       <div className={styles.introMeta}>
-        <span>Монтаж, цветокоррекция<br />VFX и композитинг<br />Саунд-дизайн<br />AI-интеграции</span>
+        <span>
+          {services.map((service, index) => (
+            <Fragment key={service}>
+              {index > 0 ? <br /> : null}
+              {service}
+            </Fragment>
+          ))}
+        </span>
       </div>
     </div>
   );

@@ -7,7 +7,11 @@ import styles from "../styles/portfolio.module.css";
 export function PostersSection() {
   return (
     <section id="posters" className={`${styles.section} ${styles.postersSection}`} data-work-section="posters">
-      <SectionIntro title="Постеры" subtitle="более 10000000000+" />
+      <SectionIntro
+        title="Постеры"
+        subtitle="более 10000000000+"
+        services={["Разработка концепции", "Моушен-дизайн", "Стилизация", "Дизайн"]}
+      />
       <div
         className={styles.posterGallery}
         style={{ "--poster-count": posters.length } as CSSProperties}
