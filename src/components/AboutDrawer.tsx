@@ -1,5 +1,4 @@
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
 import { useEffect, useRef } from "react";
 import type { RefObject } from "react";
 import { Header } from "./Header";
@@ -121,16 +120,9 @@ export function AboutDrawer({ isOpen, triggerRef, onClose, onNavigate }: AboutDr
                 x: { duration: 0.58, ease: [0.76, 0, 0.24, 1] },
                 clipPath: { duration: 0.72, delay: 0.42, ease: [0.22, 1, 0.36, 1] },
               }}
-            >
-              <Image
-                className={styles.aboutPortrait}
-                src="/ava.JPG"
-                alt="Николь Назаркулова"
-                fill
-                sizes="(max-width: 760px) calc(100vw - 40px), 500px"
-                quality={84}
-              />
-            </motion.div>
+              role="img"
+              aria-label="Николь Назаркулова"
+            />
 
           </section>
         </motion.aside>

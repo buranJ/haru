@@ -57,14 +57,12 @@ test("keeps accessibility and reduced-motion behavior in source", async () => {
   assert.match(drawer, /<h2[^>]*>[\s\S]*?<HeroModeSwitch[\s\S]*?<p>/);
   assert.match(styles, /\.aboutCopy \.heroModeSwitch\s*\{[^}]*margin-top:\s*28px/s);
   assert.match(styles, /\.heroModeSwitch\s*\{[^}]*z-index:\s*2/s);
-  assert.match(drawer, /src="\/ava\.JPG"/);
-  assert.match(drawer, /fill/);
-  assert.match(drawer, /sizes="\(max-width: 760px\)/);
-  assert.match(drawer, /alt="Николь Назаркулова"/);
-  assert.match(styles, /\.aboutPortrait\s*\{[^}]*object-fit:\s*cover/s);
+  assert.match(drawer, /role="img"/);
+  assert.match(drawer, /aria-label="Николь Назаркулова"/);
   assert.match(styles, /\.aboutMedia\s*\{[^}]*position:\s*relative/s);
+  assert.match(styles, /\.aboutMedia\s*\{[^}]*background-image:\s*url\("\/ava\.JPG"\)/s);
   assert.match(styles, /@keyframes modeArrowHint/);
-  assert.match(styles, /animation:\s*modeArrowHint 4\.8s/);
+  assert.match(styles, /animation:\s*modeArrowHint 12\.7s/);
   assert.doesNotMatch(drawer, /document\.body\.style\.overflow/);
   assert.match(slider, /event\.preventDefault\(\)/);
   assert.match(slider, /passive:\s*false/);
@@ -87,6 +85,16 @@ test("uses the supplied Product Sans family with deliberate editorial weights", 
   assert.match(styles, /\.projectInfo h3\s*\{[^}]*font-weight:\s*500/s);
   assert.match(styles, /\.projectMeta\s*\{[^}]*font-weight:\s*300/s);
   assert.match(styles, /\.sectionIntro h2,[\s\S]*?font-weight:\s*500/);
+});
+
+test("keeps the requested hero header order and telegram identity", async () => {
+  const header = await readFile(new URL("../src/components/Header.tsx", import.meta.url), "utf8");
+  const aboutPosition = header.indexOf("о себе");
+  const workPosition = header.indexOf("работы");
+
+  assert.ok(aboutPosition >= 0 && workPosition > aboutPosition);
+  assert.doesNotMatch(header, /zeska|by @/i);
+  assert.match(header, /href="https:\/\/t\.me\/haruv00y"[^>]*>@haruv00y</);
 });
 
 test("ships adaptive, muted, viewport-lazy YouTube players", async () => {

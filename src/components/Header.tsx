@@ -20,13 +20,6 @@ export function Header({
     <header className={`${styles.header} ${tone === "dark" ? styles.headerDark : styles.headerLight}`}>
       <nav className={styles.primaryNav} aria-label="Основная навигация">
         <button
-          type="button"
-          className={!aboutOpen ? styles.navActive : ""}
-          onClick={() => onNavigate("commercial")}
-        >
-          работы
-        </button>
-        <button
           ref={aboutButtonRef}
           type="button"
           className={aboutOpen ? styles.navActive : ""}
@@ -35,6 +28,13 @@ export function Header({
           onClick={onAboutToggle}
         >
           о себе
+        </button>
+        <button
+          type="button"
+          className={!aboutOpen ? styles.navActive : ""}
+          onClick={() => onNavigate("commercial")}
+        >
+          работы
         </button>
         <button type="button" onClick={() => onNavigate("clients")}>клиенты</button>
         <button type="button" onClick={() => onNavigate("skills")}>навыки</button>
@@ -48,7 +48,7 @@ export function Header({
         ) : (
           <>
             <a href="https://t.me/haruv00y" target="_blank" rel="noreferrer">мой телеграм</a>
-            <a href="https://t.me/zeska_" target="_blank" rel="noreferrer">by @zeska._</a>
+            <a href="https://t.me/haruv00y" target="_blank" rel="noreferrer">@haruv00y</a>
           </>
         )}
       </div>
