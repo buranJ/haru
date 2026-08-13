@@ -901,8 +901,23 @@
 }
 
 .marquee {
+  --marquee-fade: clamp(56px, 8vw, 128px);
   margin: 125px calc(var(--page-gutter) * -1) 0;
   overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--marquee-fade),
+    #000 calc(100% - var(--marquee-fade)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--marquee-fade),
+    #000 calc(100% - var(--marquee-fade)),
+    transparent 100%
+  );
 }
 
 .marqueeTrack {
@@ -933,11 +948,11 @@
 }
 
 .clientLogo {
-  max-width: 100%;
-  max-height: 56px;
-  width: auto;
-  height: auto;
+  width: min(100%, 175px);
+  height: 64px;
+  display: block;
   object-fit: contain;
+  object-position: center;
 }
 
 @keyframes marquee {
@@ -1435,6 +1450,7 @@
   }
 
   .marquee {
+    --marquee-fade: 34px;
     margin-top: 85px;
   }
 
@@ -1444,7 +1460,8 @@
   }
 
   .clientLogo {
-    max-height: 40px;
+    width: min(100%, 130px);
+    height: 48px;
   }
 
   .skillsSection {

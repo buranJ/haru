@@ -106,6 +106,17 @@ test("keeps the requested hero header order and telegram identity", async () => 
   assert.match(page, /activeSection=\{aboutOpen \? "about" : "work"\}/);
 });
 
+test("fades and visually normalizes the clients marquee", async () => {
+  const styles = await readFile(new URL("../src/styles/portfolio.module.css", import.meta.url), "utf8");
+
+  assert.match(styles, /\.marquee\s*\{[^}]*--marquee-fade:/s);
+  assert.match(styles, /-webkit-mask-image:\s*linear-gradient/s);
+  assert.match(styles, /mask-image:\s*linear-gradient/s);
+  assert.match(styles, /\.clientLogo\s*\{[^}]*width:\s*min\(100%, 175px\)/s);
+  assert.match(styles, /\.clientLogo\s*\{[^}]*height:\s*64px/s);
+  assert.match(styles, /\.clientLogo\s*\{[^}]*object-fit:\s*contain/s);
+});
+
 test("ships adaptive, muted, viewport-lazy YouTube players", async () => {
   const [player, reels, verticalSlider, posters, data, styles, videoFiles] = await Promise.all([
     readFile(new URL("../src/components/PortfolioVideo.tsx", import.meta.url), "utf8"),
