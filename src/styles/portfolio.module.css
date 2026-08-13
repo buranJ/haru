@@ -1107,6 +1107,13 @@
   will-change: clip-path;
 }
 
+/* The dialog takes focus on open only to move the reading position inside it;
+   a ring around the whole screen would be noise. */
+.aboutScreen:focus,
+.aboutScreen:focus-visible {
+  outline: none;
+}
+
 .aboutHero {
   height: 745px;
   padding: 120px var(--page-gutter) 0;

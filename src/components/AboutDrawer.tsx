@@ -17,18 +17,28 @@ export function AboutDrawer({ isOpen, triggerRef, onClose, onNavigate }: AboutDr
   const returnButtonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLElement>(null);
   const wasOpen = useRef(false);
+  // Handing focus back to the trigger is what a keyboard user needs, but on
+  // touch it just parks a focus ring on the arrow of the screen behind.
+  const usedKeyboard = useRef(false);
 
   useEffect(() => {
     if (!isOpen) {
-      if (wasOpen.current) triggerRef.current?.focus();
+      if (wasOpen.current && usedKeyboard.current) triggerRef.current?.focus();
       wasOpen.current = false;
+      usedKeyboard.current = false;
       return;
     }
 
     wasOpen.current = true;
-    const frame = window.requestAnimationFrame(() => returnButtonRef.current?.focus());
+    // Focus the dialog itself, not the return button: a programmatic focus on a
+    // button still counts as focus-visible on touch, which drew a stray ring
+    // around the arrow after a tap. A container takes focus without one, and
+    // screen readers announce the dialog on arrival.
+    const frame = window.requestAnimationFrame(() => dialogRef.current?.focus());
 
     const handleKeyDown = (event: KeyboardEvent) => {
+      usedKeyboard.current = true;
+
       if (event.key === "Escape") {
         onClose();
         return;
@@ -39,8 +49,9 @@ export function AboutDrawer({ isOpen, triggerRef, onClose, onNavigate }: AboutDr
       if (!focusable?.length) return;
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
+      const atStart = document.activeElement === first || document.activeElement === dialogRef.current;
 
-      if (event.shiftKey && document.activeElement === first) {
+      if (event.shiftKey && atStart) {
         event.preventDefault();
         last.focus();
       } else if (!event.shiftKey && document.activeElement === last) {
@@ -71,6 +82,7 @@ export function AboutDrawer({ isOpen, triggerRef, onClose, onNavigate }: AboutDr
           role="dialog"
           aria-modal="true"
           aria-labelledby="about-title"
+          tabIndex={-1}
           initial={{ clipPath: "inset(0 0 0 100%)" }}
           animate={{
             clipPath: "inset(0 0 0 0%)",
