@@ -7,6 +7,7 @@ interface YouTubePlayer {
   mute?: () => void;
   pauseVideo?: () => void;
   playVideo?: () => void;
+  unloadModule?: (module: string) => void;
 }
 
 interface YouTubeEvent {
@@ -46,6 +47,15 @@ let youtubeApiPromise: Promise<YouTubeApi> | null = null;
 
 function mutePlayer(player?: YouTubePlayer | null) {
   if (typeof player?.mute === "function") player.mute();
+}
+
+// cc_load_policy alone still lets a viewer's "always show captions" account
+// setting win, so the caption modules are torn down as well. "captions" is the
+// legacy player's name for it, "cc" the HTML5 one — both are safe to unload.
+function hideCaptions(player?: YouTubePlayer | null) {
+  if (typeof player?.unloadModule !== "function") return;
+  player.unloadModule("captions");
+  player.unloadModule("cc");
 }
 
 function pausePlayer(player?: YouTubePlayer | null) {
@@ -230,6 +240,7 @@ export function PortfolioVideo({
           videoId: youtubeId,
           playerVars: {
             autoplay: 0,
+            cc_load_policy: 0,
             controls: 0,
             disablekb: 1,
             enablejsapi: 1,
@@ -248,6 +259,7 @@ export function PortfolioVideo({
                 : null;
               if (iframe) iframe.loading = "lazy";
               mutePlayer(event.target);
+              hideCaptions(event.target);
               setIsReady(true);
               if (!reduceMotion && !document.hidden && visibleRef.current && autoplayRef.current) {
                 playPlayer(event.target);
@@ -266,6 +278,8 @@ export function PortfolioVideo({
               }
 
               if (event.data === api.PlayerState.PLAYING) {
+                // Playback can pull the caption module back in, so drop it again.
+                hideCaptions(event.target);
                 if (visibleRef.current && autoplayRef.current) {
                   setIsPlaying(true);
                   return;
