@@ -14,7 +14,6 @@ interface AboutDrawerProps {
 
 export function AboutDrawer({ isOpen, triggerRef, onClose, onNavigate }: AboutDrawerProps) {
   const aboutNavButtonRef = useRef<HTMLButtonElement>(null);
-  const returnButtonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLElement>(null);
   const wasOpen = useRef(false);
   // Handing focus back to the trigger is what a keyboard user needs, but on
@@ -114,7 +113,7 @@ export function AboutDrawer({ isOpen, triggerRef, onClose, onNavigate }: AboutDr
               }}
             >
               <h2 id="about-title">Николь<br />Назаркулова</h2>
-              <HeroModeSwitch ref={returnButtonRef} mode="work" onClick={onClose} />
+              <HeroModeSwitch mode="work" onClick={onClose} />
               <p>
                 Motion Design, Graph Design, vfx - Artist<br />
                 создаю коммерцию, визуалы для артистов<br />

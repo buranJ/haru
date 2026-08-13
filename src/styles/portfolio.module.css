@@ -546,30 +546,6 @@
   .videoPlay { opacity: 1; }
 }
 
-.referenceMedia {
-  width: 100%;
-  height: 100%;
-  background-color: #565656;
-  background-image: url("/main-reference.png");
-  background-repeat: no-repeat;
-  background-size: 221.54% auto;
-  transition: transform 700ms var(--ease-editorial), filter 400ms ease;
-}
-
-.mediaClip:hover .referenceMedia,
-.commercialCard:focus-visible .referenceMedia {
-  transform: scale(1.025);
-}
-
-.applePay { background-position: 91.2% 15.55%; }
-.yandexGo { background-position: 91.2% 22.42%; }
-.makaronnaya { background-position: 91.2% 29.22%; }
-.monetochka { background-position: 8.9% 38.45%; }
-.gabriele { background-position: 91.2% 38.45%; }
-.ledForest { background-position: 91.2% 49.55%; }
-.ledComic { background-position: 91.2% 52.9%; }
-.ledRed { background-position: 91.2% 56.1%; }
-
 .artists {
   min-height: clamp(1600px, 133.611vw, 1924px);
   padding: clamp(120px, 13.819vw, 199px) var(--page-gutter) 0;

@@ -53,7 +53,7 @@ test("keeps accessibility and reduced-motion behavior in source", async () => {
   assert.match(heroSwitch, /modeArrowShaft/);
   assert.match(heroSwitch, /modeArrowWingTop/);
   assert.match(heroSwitch, /modeArrowWingBottom/);
-  assert.match(drawer, /ref=\{returnButtonRef\} mode="work"/);
+  assert.match(drawer, /<HeroModeSwitch mode="work"/);
   assert.match(styles, /\.heroIdentity \.heroModeSwitch\s*\{[^}]*margin-top:\s*32px/s);
   assert.match(drawer, /<h2[^>]*>[\s\S]*?<HeroModeSwitch[\s\S]*?<p>/);
   assert.match(styles, /\.aboutCopy \.heroModeSwitch\s*\{[^}]*margin-top:\s*28px/s);

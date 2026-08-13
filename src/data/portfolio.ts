@@ -20,7 +20,6 @@ export const commercialProjects: CommercialProject[] = [
     year: "2026",
     category: "Коммерция",
     services: ["Монтаж, Цветокоррекция", "VFX и композитинг", "AI-интеграции", "Саунд-дизайн"],
-    crop: "applePay",
     posterSrc: "/videos/commercial-apple-pay.jpg",
     youtubeId: "Smiz_Qadvm0",
     videoAspect: 16 / 9,
@@ -39,7 +38,6 @@ export const commercialProjects: CommercialProject[] = [
       "Разработка концепции",
       "Режиссура",
     ],
-    crop: "yandexGo",
     posterSrc: "/videos/commercial-yandex-go.jpg",
     youtubeId: "nLEsMgA0fRs",
     videoAspect: 139 / 90,
@@ -50,7 +48,6 @@ export const commercialProjects: CommercialProject[] = [
     year: "2025",
     category: "Коммерция",
     services: ["Монтаж", "Цветокоррекция", "Моушен-дизайн"],
-    crop: "makaronnaya",
     posterSrc: "/videos/commercial-macaronnaya.jpg",
     youtubeId: "PbS9fwStsC4",
     videoAspect: 139 / 90,
@@ -63,7 +60,6 @@ export const artistProjects: ArtistProject[] = [
     title: "Монеточка\nКис Кис Кис (Live)\nTitle",
     year: "2025",
     services: ["Разработка концепции", "Моушен-дизайн", "Стилизация", "Дизайн"],
-    crop: "monetochka",
     posterSrc: "/videos/artist-monetochka.jpg",
     youtubeId: "IxsDBMib4VQ",
     videoAspect: 16 / 9,
@@ -73,7 +69,6 @@ export const artistProjects: ArtistProject[] = [
     title: "Gabrielė Vilkickytė\nTroleibusas\nTitle",
     year: "2024",
     services: ["Разработка концепции", "Отрисовка элементов", "Моушен-дизайн", "Стилизация", "Дизайн"],
-    crop: "gabriele",
     posterSrc: "/videos/artist-troleibusas.jpg",
     youtubeId: "vRBMSfyvHJM",
     videoAspect: 16 / 9,
@@ -82,11 +77,11 @@ export const artistProjects: ArtistProject[] = [
 ];
 
 export const ledSlides: LedSlide[] = [
-  { title: "LED Visual 01", crop: "ledForest", posterSrc: "/videos/led-01.jpg", youtubeId: "S9rA_RwjWHw", videoAspect: 16 / 9 },
-  { title: "LED Visual 02", crop: "ledComic", posterSrc: "/videos/led-02.jpg", youtubeId: "79ohtRTwnBs", videoAspect: 16 / 9 },
-  { title: "LED Visual 03", crop: "ledRed", posterSrc: "/videos/led-03.jpg", youtubeId: "VOrzZtzQ59s", videoAspect: 16 / 9 },
-  { title: "LED Visual 04", crop: "ledForest", posterSrc: "/videos/led-04.jpg", youtubeId: "E30KPN4kjG0", videoAspect: 16 / 9 },
-  { title: "LED Visual 05", crop: "ledComic", posterSrc: "/videos/led-05.jpg", youtubeId: "H1dfVoDVzfc", videoAspect: 16 / 9 },
+  { title: "LED Visual 01", posterSrc: "/videos/led-01.jpg", youtubeId: "S9rA_RwjWHw", videoAspect: 16 / 9 },
+  { title: "LED Visual 02", posterSrc: "/videos/led-02.jpg", youtubeId: "79ohtRTwnBs", videoAspect: 16 / 9 },
+  { title: "LED Visual 03", posterSrc: "/videos/led-03.jpg", youtubeId: "VOrzZtzQ59s", videoAspect: 16 / 9 },
+  { title: "LED Visual 04", posterSrc: "/videos/led-04.jpg", youtubeId: "E30KPN4kjG0", videoAspect: 16 / 9 },
+  { title: "LED Visual 05", posterSrc: "/videos/led-05.jpg", youtubeId: "H1dfVoDVzfc", videoAspect: 16 / 9 },
 ];
 
 export const skillGroups: SkillGroup[] = [

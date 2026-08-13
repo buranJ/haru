@@ -83,7 +83,6 @@ export function PortfolioPage() {
       <ClientsSection />
       <SkillsSection />
       <Footer />
-
     </main>
   );
 }
