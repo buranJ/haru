@@ -126,7 +126,10 @@ test("ships adaptive, muted, viewport-lazy YouTube players", async () => {
   assert.match(verticalSlider, /fit="contain"/);
   assert.match(posters, /fit="contain"/);
   assert.match(styles, /\.videoContain \.videoPoster\s*\{[^}]*object-fit:\s*contain/s);
-  assert.match(styles, /aspect-ratio:\s*calc\(var\(--poster-count\) \* 9\) \/ 16/);
+  // The 9:16 ratio belongs to the tile: on the gallery, the column gaps ate into
+  // each cell and the player letterboxed the shortfall as a black edge.
+  assert.match(styles, /\.poster \{[^}]*aspect-ratio:\s*9 \/ 16/s);
+  assert.doesNotMatch(styles, /aspect-ratio:\s*calc\(var\(--poster-count\) \* 9\) \/ 16/);
   assert.match(player, /typeof player\?\.pauseVideo === "function"/);
   assert.match(player, /if \(!player \|\| !isReady\) return/);
   assert.match(player, /if \(disposed\) return/);
@@ -134,12 +137,15 @@ test("ships adaptive, muted, viewport-lazy YouTube players", async () => {
   assert.match(player, /destroyPlayer\(playerRef\.current\)/);
   assert.match(player, /controls:\s*0/);
   assert.match(player, /mute:\s*1/);
+  assert.match(player, /cc_load_policy:\s*0/);
+  assert.match(player, /unloadModule\("captions"\)/);
+  assert.match(player, /unloadModule\("cc"\)/);
   assert.match(player, /player\.mute\(\)/);
   assert.match(player, /playsinline:\s*1/);
   assert.doesNotMatch(player, /playlist:\s*youtubeId|loop:\s*1/);
   assert.match(styles, /youtubeApiMount iframe/);
   assert.match(styles, /object-fit:\s*cover/);
-  assert.match(styles, /animation:\s*reelsMarquee 56s linear infinite/);
+  assert.match(styles, /animation:\s*reelsMarquee 51s linear infinite/);
   assert.doesNotMatch(styles, /\.reelCard\s*\{[^}]*padding:\s*14px/s);
   assert.doesNotMatch(player, /<video/);
   assert.equal((data.match(/youtubeId:/g) ?? []).length, 26);

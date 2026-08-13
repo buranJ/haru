@@ -784,7 +784,7 @@
 }
 
 .reelsTrack {
-  animation: reelsMarquee 56s linear infinite;
+  animation: reelsMarquee 51s linear infinite;
   will-change: transform;
 }
 
@@ -862,14 +862,17 @@
 .posterGallery {
   width: 100%;
   height: auto;
-  aspect-ratio: calc(var(--poster-count) * 9) / 16;
   display: grid;
   grid-template-columns: repeat(var(--poster-count), minmax(0, 1fr));
   gap: 3px;
   overflow: hidden;
 }
 
+/* The ratio lives on the tile, not the gallery: sizing the gallery instead left
+   each cell shorter than 9:16 by its share of the gaps, and the player letterboxed
+   the difference as a black edge. */
 .poster {
+  aspect-ratio: 9 / 16;
   min-width: 0;
   position: relative;
   display: flex;
@@ -985,16 +988,13 @@
   font-weight: 700;
 }
 
+/* The asset carries its own dark plate, so it fills the tile edge to edge
+   instead of sitting on the shared background as a second square. */
 .davinciMark {
-  width: 22px;
-  height: 22px;
+  width: 100%;
+  height: 100%;
   display: block;
-  border: 3px solid transparent;
-  border-radius: 50%;
-  background: conic-gradient(#f14e4e, #f5cb4f, #43c889, #479eea, #9b68d8, #f14e4e) border-box;
-  -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
+  object-fit: cover;
 }
 
 .adobeTools span:nth-child(2),
@@ -1426,8 +1426,6 @@
   }
 
   .posterGallery {
-    height: 338px;
-    aspect-ratio: auto;
     grid-template-columns: repeat(var(--poster-count), 190px);
     overflow-x: auto;
   }

@@ -14,7 +14,10 @@ export function SkillsSection() {
           <div className={styles.adobeTools} aria-label="Программы">
             {adobeTools.map((tool) => (
               <span key={tool} aria-label={tool}>
-                {tool === "DaVinci" ? <i className={styles.davinciMark} /> : tool}
+                {tool === "DaVinci" ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img className={styles.davinciMark} src="/dav.png" alt="" decoding="async" />
+                ) : tool}
               </span>
             ))}
           </div>
