@@ -62,6 +62,9 @@ test("keeps accessibility and reduced-motion behavior in source", async () => {
   assert.match(drawer, /sizes="\(max-width: 760px\)/);
   assert.match(drawer, /alt="Николь Назаркулова"/);
   assert.match(styles, /\.aboutPortrait\s*\{[^}]*object-fit:\s*cover/s);
+  assert.match(styles, /\.aboutMedia\s*\{[^}]*position:\s*relative/s);
+  assert.match(styles, /@keyframes modeArrowHint/);
+  assert.match(styles, /animation:\s*modeArrowHint 4\.8s/);
   assert.doesNotMatch(drawer, /document\.body\.style\.overflow/);
   assert.match(slider, /event\.preventDefault\(\)/);
   assert.match(slider, /passive:\s*false/);
