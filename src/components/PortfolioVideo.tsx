@@ -127,7 +127,6 @@ export function PortfolioVideo({
   const [shouldMountPlayer, setShouldMountPlayer] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isPresentationReady, setIsPresentationReady] = useState(false);
   const [hasError, setHasError] = useState(false);
   const canMountPlayer = enabled && shouldMountPlayer;
 
@@ -147,7 +146,6 @@ export function PortfolioVideo({
         if (nextVisible) setHasError(false);
         if (!nextVisible) {
           setIsPlaying(false);
-          setIsPresentationReady(false);
         }
       },
       { threshold: [0, 0.18, 0.5] },
@@ -232,10 +230,8 @@ export function PortfolioVideo({
             enablejsapi: 1,
             fs: 0,
             iv_load_policy: 3,
-            loop: 1,
             mute: 1,
             origin: window.location.origin,
-            playlist: youtubeId,
             playsinline: 1,
             rel: 0,
           },
@@ -255,10 +251,12 @@ export function PortfolioVideo({
             onStateChange: (event) => {
               if (disposed) return;
               if (event.data === api.PlayerState.ENDED) {
+                if (visibleRef.current && autoplayRef.current) {
+                  playPlayer(event.target);
+                  return;
+                }
                 setIsPlaying(false);
-                setIsPresentationReady(false);
-                if (visibleRef.current && autoplayRef.current) playPlayer(event.target);
-                else pausePlayer(event.target);
+                pausePlayer(event.target);
                 return;
               }
 
@@ -269,26 +267,22 @@ export function PortfolioVideo({
                 }
                 pausePlayer(event.target);
                 setIsPlaying(false);
-                setIsPresentationReady(false);
                 return;
               }
 
               if (event.data === api.PlayerState.PAUSED) {
                 setIsPlaying(false);
-                setIsPresentationReady(false);
               }
             },
             onAutoplayBlocked: () => {
               if (disposed) return;
               setIsPlaying(false);
-              setIsPresentationReady(false);
             },
             onError: () => {
               if (disposed) return;
               setHasError(true);
               setIsReady(false);
               setIsPlaying(false);
-              setIsPresentationReady(false);
             },
           },
         });
@@ -302,21 +296,8 @@ export function PortfolioVideo({
       host.replaceChildren();
       setIsReady(false);
       setIsPlaying(false);
-      setIsPresentationReady(false);
     };
   }, [canMountPlayer, youtubeId]);
-
-  useEffect(() => {
-    if (!isPlaying || !isVisible) return;
-
-    // YouTube always renders its title/avatar chrome when playback starts.
-    // Keep our poster above it until that transient chrome has faded away.
-    const revealTimer = window.setTimeout(() => {
-      setIsPresentationReady(true);
-    }, 2600);
-
-    return () => window.clearTimeout(revealTimer);
-  }, [isPlaying, isVisible]);
 
   useEffect(() => {
     const handleVisibility = () => {
@@ -325,7 +306,6 @@ export function PortfolioVideo({
       if (document.hidden || !isVisible || !autoplay) {
         pausePlayer(player);
         setIsPlaying(false);
-        setIsPresentationReady(false);
       }
       else if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         mutePlayer(player);
@@ -342,7 +322,6 @@ export function PortfolioVideo({
     const player = playerRef.current;
     if (!player || !isReady) return;
     if (isPlaying) {
-      setIsPresentationReady(false);
       pausePlayer(player);
     }
     else {
@@ -354,7 +333,7 @@ export function PortfolioVideo({
   return (
     <div
       ref={rootRef}
-      className={`${styles.portfolioVideo} ${isPresentationReady ? styles.videoReady : ""} ${className}`}
+      className={`${styles.portfolioVideo} ${isPlaying ? styles.videoReady : ""} ${className}`}
       role="group"
       aria-label={title}
     >

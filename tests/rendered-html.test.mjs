@@ -63,8 +63,7 @@ test("ships adaptive, muted, viewport-lazy YouTube players", async () => {
   assert.match(player, /new IntersectionObserver/);
   assert.match(player, /preloadMargin/);
   assert.match(player, /unloadDelay/);
-  assert.match(player, /isPresentationReady/);
-  assert.match(player, /2600/);
+  assert.doesNotMatch(player, /isPresentationReady|setIsPresentationReady|2600/);
   assert.match(player, /enabled/);
   assert.match(reels, /enabled=\{activeReelKey ===/);
   assert.match(player, /typeof player\?\.pauseVideo === "function"/);
@@ -76,6 +75,7 @@ test("ships adaptive, muted, viewport-lazy YouTube players", async () => {
   assert.match(player, /mute:\s*1/);
   assert.match(player, /player\.mute\(\)/);
   assert.match(player, /playsinline:\s*1/);
+  assert.doesNotMatch(player, /playlist:\s*youtubeId|loop:\s*1/);
   assert.match(styles, /youtubeApiMount iframe/);
   assert.match(styles, /object-fit:\s*cover/);
   assert.match(styles, /animation:\s*reelsMarquee 56s linear infinite/);
