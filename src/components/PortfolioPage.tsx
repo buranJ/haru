@@ -49,7 +49,7 @@ export function PortfolioPage() {
     <main className={styles.page}>
       <div id="hero" className={styles.blackStage}>
         <Header
-          aboutOpen={aboutOpen}
+          activeSection={aboutOpen ? "about" : "work"}
           aboutButtonRef={headerAboutButtonRef}
           onAboutToggle={() => {
             aboutReturnRef.current = headerAboutButtonRef.current;

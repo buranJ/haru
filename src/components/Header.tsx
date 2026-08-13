@@ -2,7 +2,7 @@ import type { RefObject } from "react";
 import styles from "../styles/portfolio.module.css";
 
 interface HeaderProps {
-  aboutOpen: boolean;
+  activeSection: "about" | "work";
   aboutButtonRef: RefObject<HTMLButtonElement | null>;
   onAboutToggle: () => void;
   onNavigate: (id: string) => void;
@@ -10,20 +10,24 @@ interface HeaderProps {
 }
 
 export function Header({
-  aboutOpen,
+  activeSection,
   aboutButtonRef,
   onAboutToggle,
   onNavigate,
   tone = "light",
 }: HeaderProps) {
+  const aboutActive = activeSection === "about";
+  const workActive = activeSection === "work";
+
   return (
     <header className={`${styles.header} ${tone === "dark" ? styles.headerDark : styles.headerLight}`}>
       <nav className={styles.primaryNav} aria-label="Основная навигация">
         <button
           ref={aboutButtonRef}
           type="button"
-          className={aboutOpen ? styles.navActive : ""}
-          aria-expanded={aboutOpen}
+          className={aboutActive ? styles.navActive : ""}
+          aria-current={aboutActive ? "page" : undefined}
+          aria-expanded={aboutActive}
           aria-controls="about-drawer"
           onClick={onAboutToggle}
         >
@@ -31,7 +35,8 @@ export function Header({
         </button>
         <button
           type="button"
-          className={!aboutOpen ? styles.navActive : ""}
+          className={workActive ? styles.navActive : ""}
+          aria-current={workActive ? "page" : undefined}
           onClick={() => onNavigate("commercial")}
         >
           работы

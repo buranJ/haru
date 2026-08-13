@@ -49,9 +49,15 @@
   color: #8a8a8a;
 }
 
-.headerLight button:hover,
-.headerLight a:hover,
 .headerLight .navActive {
+  color: var(--black);
+}
+
+.headerLight button:not(.navActive):hover {
+  color: #4f4f4f;
+}
+
+.headerLight a:hover {
   color: var(--black);
 }
 
@@ -59,9 +65,15 @@
   color: #6f6f6f;
 }
 
-.headerDark button:hover,
-.headerDark a:hover,
 .headerDark .navActive {
+  color: var(--white);
+}
+
+.headerDark button:not(.navActive):hover {
+  color: #b8b8b8;
+}
+
+.headerDark a:hover {
   color: var(--white);
 }
 

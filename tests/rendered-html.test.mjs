@@ -88,13 +88,22 @@ test("uses the supplied Product Sans family with deliberate editorial weights", 
 });
 
 test("keeps the requested hero header order and telegram identity", async () => {
-  const header = await readFile(new URL("../src/components/Header.tsx", import.meta.url), "utf8");
+  const [header, drawer, page] = await Promise.all([
+    readFile(new URL("../src/components/Header.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../src/components/AboutDrawer.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../src/components/PortfolioPage.tsx", import.meta.url), "utf8"),
+  ]);
   const aboutPosition = header.indexOf("о себе");
   const workPosition = header.indexOf("работы");
 
   assert.ok(aboutPosition >= 0 && workPosition > aboutPosition);
   assert.doesNotMatch(header, /zeska|by @/i);
   assert.match(header, /href="https:\/\/t\.me\/haruv00y"[^>]*>@haruv00y</);
+  assert.match(header, /activeSection:\s*"about" \| "work"/);
+  assert.match(header, /aria-current=\{aboutActive \? "page" : undefined\}/);
+  assert.match(header, /aria-current=\{workActive \? "page" : undefined\}/);
+  assert.match(drawer, /activeSection="about"/);
+  assert.match(page, /activeSection=\{aboutOpen \? "about" : "work"\}/);
 });
 
 test("ships adaptive, muted, viewport-lazy YouTube players", async () => {

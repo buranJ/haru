@@ -83,7 +83,7 @@ export function AboutDrawer({ isOpen, triggerRef, onClose, onNavigate }: AboutDr
         >
           <Header
             tone="dark"
-            aboutOpen
+            activeSection="about"
             aboutButtonRef={aboutNavButtonRef}
             onAboutToggle={onClose}
             onNavigate={navigateAfterClose}
